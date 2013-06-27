@@ -1,0 +1,32 @@
+{
+  "name": "social-cms-backend",
+  "description": "Express middleware to provide schema-less REST APIs for creating a social networking website primarily using angular.js. It comes with built-in authentication, authorization and notification features.",
+  "version": "0.0.1",
+  "author": "Daishi Kato <daishi@axlight.com>",
+  "dependencies": {
+    "mongodb": "~1.3.10"
+  },
+  "devDependencies": {
+    "express": "*",
+    "mocha": "*"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dai-shi/social-cms-backend.git"
+  },
+  "keywords": [
+    "express",
+    "social",
+    "cms",
+    "rest",
+    "angular"
+  ],
+  "main": "./lib/index.js",
+  "scripts": {
+    "test": "./node_modules/.bin/mocha"
+  },
+  "license": "BSD",
+  "engines": {
+    "node": ">=0.8.4"
+  }
+}
