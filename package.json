@@ -12,6 +12,7 @@
   },
   "devDependencies": {
     "express": "*",
+    "request": "*",
     "mocha": "*"
   },
   "repository": {

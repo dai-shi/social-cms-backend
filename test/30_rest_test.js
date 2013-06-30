@@ -1,5 +1,6 @@
-//var assert = require('assert');
+var assert = require('assert');
 var express = require('express');
+var request = require('request');
 var MongoClient = require('mongodb').MongoClient;
 var mongodb_url = process.env.MONGODB_URL || 'mongodb://localhost:27017/socialcmsdb_test';
 var SCB = require('../lib/index.js');
@@ -12,6 +13,24 @@ describe('initialize database', function() {
       db.dropDatabase(done);
     });
   });
+
+  it('should create a dummy user account', function(done) {
+    MongoClient.connect(mongodb_url, function(err, db) {
+      if (err) return done(err);
+      db.collection('user', function(err, collection) {
+        if (err) return done(err);
+        collection.insert({
+          _id: 1,
+          system: {
+            username: 'dummyuser',
+            password: 'dummypassword'
+          }
+        }, {
+          w: 1
+        }, done);
+      });
+    });
+  });
 });
 
 describe('initialize server', function() {
@@ -19,15 +38,29 @@ describe('initialize server', function() {
     var app = express();
     app.use(SCB.middleware());
     app.listen(port);
-    done();
+    //wait a sec for mongodb connection be ready
+    setTimeout(done, 1000);
   });
-  it('should create a dummy user account');
 });
 
 describe('form login test', function() {
-  it('should login as a user');
+  it('should fail to login as unknown user', function(done) {
+    request.post('http://localhost:' + port + '/login/local', {
+      form: {
+        username: 'xxx',
+        password: 'yyy',
+        failed_redirect: '/loginfailed',
+        success_redirect: '/loginsuccess'
+      }
+    }, function(error, response) {
+      assert.equal(response.statusCode, 302);
+      assert.equal(response.headers.location, '/loginfailed');
+      done();
+    });
+  });
+
   it('should fail to login with empty password');
-  it('should fail to login as unknown user');
+  it('should login as a user');
 });
 
 describe('create post test', function() {
