@@ -36,10 +36,12 @@ describe('initialize database', function() {
 describe('initialize server', function() {
   it('should start the server', function(done) {
     var app = express();
-    app.use(SCB.middleware());
+    app.use(SCB.middleware({
+      mongodb_url: mongodb_url
+    }));
     app.listen(port);
     //wait a sec for mongodb connection be ready
-    setTimeout(done, 1000);
+    setTimeout(done, 300);
   });
 });
 
@@ -59,10 +61,100 @@ describe('form login test', function() {
     });
   });
 
-  it('should fail to login with empty password');
-  it('should login as a user');
+  it('should fail to login with empty password', function(done) {
+    request.post('http://localhost:' + port + '/login/local', {
+      form: {
+        username: 'dummyuser',
+        password: '',
+        failed_redirect: '/loginfailed',
+        success_redirect: '/loginsuccess'
+      }
+    }, function(error, response) {
+      assert.equal(response.statusCode, 302);
+      assert.equal(response.headers.location, '/loginfailed');
+      done();
+    });
+  });
+
+  it('should login as a user', function(done) {
+    request.post('http://localhost:' + port + '/login/local', {
+      form: {
+        username: 'dummyuser',
+        password: 'dummypassword',
+        failed_redirect: '/loginfailed',
+        success_redirect: '/loginsuccess'
+      }
+    }, function(error, response) {
+      assert.equal(response.statusCode, 302);
+      assert.equal(response.headers.location, '/loginsuccess');
+      done();
+    });
+  });
+
 });
 
 describe('create post test', function() {
-  it('should post a post');
+  it('should post a new post', function(done) {
+    request.post('http://localhost:' + port + '/posts', {
+      json: {
+        foo: 'bar'
+      }
+    }, function(error, response) {
+      assert.equal(response.statusCode, 200);
+      assert.equal(response.body.status, 'ok');
+      done();
+    });
+  });
+
+  it('should fail to post with _id', function(done) {
+    request.post('http://localhost:' + port + '/posts', {
+      json: {
+        _id: 999,
+        foo: 'bar'
+      }
+    }, function(error, response) {
+      assert.equal(response.statusCode, 500);
+      done();
+    });
+  });
+
+  it('should fail to post with system', function(done) {
+    request.post('http://localhost:' + port + '/posts', {
+      json: {
+        system: 'xxx',
+        foo: 'bar'
+      }
+    }, function(error, response) {
+      assert.equal(response.statusCode, 500);
+      done();
+    });
+  });
+
+  it('should fail to post with created_time', function(done) {
+    request.post('http://localhost:' + port + '/posts', {
+      json: {
+        created_time: 'xxx',
+        foo: 'bar'
+      }
+    }, function(error, response) {
+      assert.equal(response.statusCode, 500);
+      done();
+    });
+  });
+
+
+  it('should fail to post with owner', function(done) {
+    request.post('http://localhost:' + port + '/posts', {
+      json: {
+        owner: 'xxx',
+        foo: 'bar'
+      }
+    }, function(error, response) {
+      assert.equal(response.statusCode, 500);
+      done();
+    });
+  });
+
+  //TODO post (group scope, user scope, group/user scope)
+
 });
