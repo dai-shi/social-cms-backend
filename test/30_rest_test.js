@@ -31,6 +31,41 @@ describe('initialize database', function() {
       });
     });
   });
+
+  it('should create a group with the user', function(done) {
+    MongoClient.connect(mongodb_url, function(err, db) {
+      if (err) return done(err);
+      db.collection('group', function(err, collection) {
+        if (err) return done(err);
+        collection.insert({
+          _id: 1,
+          name: 'group1',
+          members: [{
+            user_id: 1
+          }]
+        }, {
+          w: 1
+        }, done);
+      });
+    });
+  });
+
+  it('should create a group with no member', function(done) {
+    MongoClient.connect(mongodb_url, function(err, db) {
+      if (err) return done(err);
+      db.collection('group', function(err, collection) {
+        if (err) return done(err);
+        collection.insert({
+          _id: 2,
+          name: 'group2',
+          members: []
+        }, {
+          w: 1
+        }, done);
+      });
+    });
+  });
+
 });
 
 describe('initialize server', function() {
@@ -155,6 +190,112 @@ describe('create post test', function() {
     });
   });
 
-  //TODO post (group scope, user scope, group/user scope)
+  it('should post a new post with group scope', function(done) {
+    request.post('http://localhost:' + port + '/posts', {
+      json: {
+        scope: [{
+          group_id: 1
+        }],
+        foo: 'bar'
+      }
+    }, function(error, response) {
+      assert.equal(response.statusCode, 200);
+      assert.equal(response.body.status, 'ok');
+      done();
+    });
+  });
 
+  it('should fail to post a new post with wrong group scope', function(done) {
+    request.post('http://localhost:' + port + '/posts', {
+      json: {
+        scope: [{
+          group_id: 2
+        }],
+        foo: 'bar'
+      }
+    }, function(error, response) {
+      assert.equal(response.statusCode, 500);
+      done();
+    });
+  });
+
+  it('should fail to post a new post with non-existent group scope', function(done) {
+    request.post('http://localhost:' + port + '/posts', {
+      json: {
+        scope: [{
+          group_id: 9
+        }],
+        foo: 'bar'
+      }
+    }, function(error, response) {
+      assert.equal(response.statusCode, 500);
+      done();
+    });
+  });
+
+
+  it('should post a new post with user scope', function(done) {
+    request.post('http://localhost:' + port + '/posts', {
+      json: {
+        scope: [{
+          user_id: 1
+        }],
+        foo: 'bar'
+      }
+    }, function(error, response) {
+      assert.equal(response.statusCode, 200);
+      assert.equal(response.body.status, 'ok');
+      done();
+    });
+  });
+
+  it('should fail to post a new post with wrong user scope', function(done) {
+    request.post('http://localhost:' + port + '/posts', {
+      json: {
+        scope: [{
+          user_id: 9
+        }],
+        foo: 'bar'
+      }
+    }, function(error, response) {
+      assert.equal(response.statusCode, 500);
+      done();
+    });
+  });
+
+  it('should post a new post with user/group scope', function(done) {
+    request.post('http://localhost:' + port + '/posts', {
+      json: {
+        scope: [{
+          user_id: 1,
+          group_id: 1
+        }],
+        foo: 'bar'
+      }
+    }, function(error, response) {
+      assert.equal(response.statusCode, 200);
+      assert.equal(response.body.status, 'ok');
+      done();
+    });
+  });
+
+  it('should fail to post a new post with wrong user/group scope', function(done) {
+    request.post('http://localhost:' + port + '/posts', {
+      json: {
+        scope: [{
+          user_id: 1,
+          group_id: 2
+        }],
+        foo: 'bar'
+      }
+    }, function(error, response) {
+      assert.equal(response.statusCode, 500);
+      done();
+    });
+  });
+
+});
+
+describe('create post test', function() {
+  it('should create a new group');
 });
