@@ -75,7 +75,7 @@ describe('initialize server', function() {
       mongodb_url: mongodb_url
     }));
     app.listen(port);
-    //wait a sec for mongodb connection be ready
+    //wait a while for the mongodb connection to be ready
     setTimeout(done, 300);
   });
 });
@@ -136,7 +136,7 @@ describe('create post test', function() {
       }
     }, function(error, response) {
       assert.equal(response.statusCode, 200);
-      assert.equal(response.body.status, 'ok');
+      assert.equal(response.body._id, 1);
       done();
     });
   });
@@ -200,7 +200,7 @@ describe('create post test', function() {
       }
     }, function(error, response) {
       assert.equal(response.statusCode, 200);
-      assert.equal(response.body.status, 'ok');
+      assert.equal(response.body._id, 2);
       done();
     });
   });
@@ -244,7 +244,7 @@ describe('create post test', function() {
       }
     }, function(error, response) {
       assert.equal(response.statusCode, 200);
-      assert.equal(response.body.status, 'ok');
+      assert.equal(response.body._id, 3);
       done();
     });
   });
@@ -274,7 +274,7 @@ describe('create post test', function() {
       }
     }, function(error, response) {
       assert.equal(response.statusCode, 200);
-      assert.equal(response.body.status, 'ok');
+      assert.equal(response.body._id, 4);
       done();
     });
   });
@@ -296,6 +296,35 @@ describe('create post test', function() {
 
 });
 
-describe('create post test', function() {
-  it('should create a new group');
+describe('get post test', function() {
+  it('should get a post', function(done) {
+    request.get({
+      url: 'http://localhost:' + port + '/posts/1',
+      json: true
+    }, function(error, response) {
+      assert.equal(response.statusCode, 200);
+      assert.equal(response.body.foo, 'bar');
+      done();
+    });
+  });
+
+  it('should fail to get a post');
+
 });
+
+/*
+describe('query post test');
+describe('delete post test');
+describe('update post test');
+
+describe('create group test');
+describe('get group test');
+describe('query group test');
+describe('delete group test');
+describe('update group test');
+
+describe('create user test');
+describe('query user test');
+describe('delete user test');
+describe('update user test');
+*/
