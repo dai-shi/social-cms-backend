@@ -135,7 +135,7 @@ describe('create post test', function() {
         foo: 'bar'
       }
     }, function(error, response) {
-      assert.equal(response.statusCode, 200);
+      assert.equal(response.statusCode, 200, response.body);
       assert.equal(response.body._id, 1);
       done();
     });
@@ -199,7 +199,7 @@ describe('create post test', function() {
         foo: 'bar'
       }
     }, function(error, response) {
-      assert.equal(response.statusCode, 200);
+      assert.equal(response.statusCode, 200, response.body);
       assert.equal(response.body._id, 2);
       done();
     });
@@ -243,7 +243,7 @@ describe('create post test', function() {
         foo: 'bar'
       }
     }, function(error, response) {
-      assert.equal(response.statusCode, 200);
+      assert.equal(response.statusCode, 200, response.body);
       assert.equal(response.body._id, 3);
       done();
     });
@@ -273,7 +273,7 @@ describe('create post test', function() {
         foo: 'bar'
       }
     }, function(error, response) {
-      assert.equal(response.statusCode, 200);
+      assert.equal(response.statusCode, 200, response.body);
       assert.equal(response.body._id, 4);
       done();
     });
@@ -302,21 +302,172 @@ describe('get post test', function() {
       url: 'http://localhost:' + port + '/posts/1',
       json: true
     }, function(error, response) {
-      assert.equal(response.statusCode, 200);
+      assert.equal(response.statusCode, 200, response.body);
       assert.equal(response.body.foo, 'bar');
+      assert.equal(response.body._id, 1);
       done();
     });
   });
 
-  it('should fail to get a post');
+  it('should get a post', function(done) {
+    request.get({
+      url: 'http://localhost:' + port + '/posts/2',
+      json: true
+    }, function(error, response) {
+      assert.equal(response.statusCode, 200, response.body);
+      assert.equal(response.body.foo, 'bar');
+      assert.equal(response.body._id, 2);
+      done();
+    });
+  });
+
+  it('should get a post', function(done) {
+    request.get({
+      url: 'http://localhost:' + port + '/posts/3',
+      json: true
+    }, function(error, response) {
+      assert.equal(response.statusCode, 200, response.body);
+      assert.equal(response.body.foo, 'bar');
+      assert.equal(response.body._id, 3);
+      done();
+    });
+  });
+
+  it('should get a post', function(done) {
+    request.get({
+      url: 'http://localhost:' + port + '/posts/4',
+      json: true
+    }, function(error, response) {
+      assert.equal(response.statusCode, 200, response.body);
+      assert.equal(response.body.foo, 'bar');
+      assert.equal(response.body._id, 4);
+      done();
+    });
+  });
+
+  it('should fail to get a post', function(done) {
+    request.get({
+      url: 'http://localhost:' + port + '/posts/9',
+      json: true
+    }, function(error, response) {
+      assert.equal(response.statusCode, 404);
+      done();
+    });
+  });
+
+});
+
+describe('query post test', function() {
+  it('should query posts', function(done) {
+    request.get({
+      url: 'http://localhost:' + port + '/posts',
+      json: true,
+      qs: {
+        query: JSON.stringify({
+          foo: 'bar'
+        })
+      }
+    }, function(error, response) {
+      assert.equal(response.statusCode, 200, response.body);
+      assert.equal(response.body.length, 4);
+      done();
+    });
+  });
+
+  it('should fail to query posts', function(done) {
+    request.get({
+      url: 'http://localhost:' + port + '/posts',
+      json: true,
+      qs: {
+        query: JSON.stringify({
+          foo: 'xxx'
+        })
+      }
+    }, function(error, response) {
+      assert.equal(response.statusCode, 200, response.body);
+      assert.equal(response.body.length, 0);
+      done();
+    });
+  });
+
+});
+
+describe('delete post test', function() {
+  it('should delete a post', function(done) {
+    request({
+      method: 'delete',
+      url: 'http://localhost:' + port + '/posts/1',
+      json: true
+    }, function(error, response) {
+      assert.equal(response.statusCode, 200, response.body);
+      assert.equal(response.body.status, 'ok');
+      done();
+    });
+  });
+
+  it('should query remaining posts', function(done) {
+    request.get({
+      url: 'http://localhost:' + port + '/posts',
+      json: true,
+      qs: {
+        query: JSON.stringify({
+          foo: 'bar'
+        })
+      }
+    }, function(error, response) {
+      assert.equal(response.statusCode, 200, response.body);
+      assert.equal(response.body.length, 3);
+      done();
+    });
+  });
+
+  it('should fail to delete a post', function(done) {
+    request({
+      method: 'delete',
+      url: 'http://localhost:' + port + '/posts/9',
+      json: true
+    }, function(error, response) {
+      assert.equal(response.statusCode, 500, response.body);
+      done();
+    });
+  });
+
+});
+
+describe('update post test', function() {
+  it('should update a post', function(done) {
+    request({
+      method: 'put',
+      url: 'http://localhost:' + port + '/posts/2',
+      json: {
+        $set: {
+          foo: 'bar2',
+          bar: 'bar'
+        }
+      }
+    }, function(error, response) {
+      assert.equal(response.statusCode, 200, response.body);
+      assert.equal(response.body.status, 'ok');
+      done();
+    });
+  });
+
+  it('should get the updated post', function(done) {
+    request.get({
+      url: 'http://localhost:' + port + '/posts/2',
+      json: true
+    }, function(error, response) {
+      assert.equal(response.statusCode, 200, response.body);
+      assert.equal(response.body.foo, 'bar2');
+      assert.equal(response.body.bar, 'bar');
+      assert.equal(response.body.scope[0].group_id, 1);
+      done();
+    });
+  });
 
 });
 
 /*
-describe('query post test');
-describe('delete post test');
-describe('update post test');
-
 describe('create group test');
 describe('get group test');
 describe('query group test');
