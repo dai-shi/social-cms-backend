@@ -467,15 +467,46 @@ describe('update post test', function() {
 
 });
 
-/*
-describe('create group test');
-describe('get group test');
-describe('query group test');
-describe('delete group test');
-describe('update group test');
+describe('user creation test', function() {
+  it('should create a new user', function(done) {
+    request.post('http://localhost:' + port + '/login/local', {
+      form: {
+        mode: 'create',
+        username: 'user001',
+        password: 'password001',
+        success_redirect: '/adduser_success'
+      }
+    }, function(error, response) {
+      assert.equal(response.statusCode, 302);
+      assert.equal(response.headers.location, '/adduser_success');
+      done();
+    });
+  });
 
-describe('create user test');
-describe('query user test');
-describe('delete user test');
-describe('update user test');
-*/
+  it('should fail to create a new user without username', function(done) {
+    request.post('http://localhost:' + port + '/login/local', {
+      form: {
+        mode: 'create',
+        success_redirect: '/adduser_success'
+      }
+    }, function(error, response) {
+      assert.equal(response.statusCode, 500);
+      done();
+    });
+  });
+
+  it('should fail to create an existing use', function(done) {
+    request.post('http://localhost:' + port + '/login/local', {
+      form: {
+        mode: 'create',
+        username: 'dummyuser',
+        password: 'password002',
+        success_redirect: '/adduser_success'
+      }
+    }, function(error, response) {
+      assert.equal(response.statusCode, 500);
+      done();
+    });
+  });
+
+});
