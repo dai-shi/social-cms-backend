@@ -68,13 +68,15 @@ describe('initialize database', function() {
 
 });
 
+var server;
+
 describe('initialize server', function() {
   it('should start the server', function(done) {
     var app = express();
     app.use(SCB.middleware({
       mongodb_url: mongodb_url
     }));
-    app.listen(port);
+    server = app.listen(port);
     //wait a while for the mongodb connection to be ready
     setTimeout(done, 300);
   });
@@ -509,4 +511,11 @@ describe('user creation test', function() {
     });
   });
 
+});
+
+describe('shutdown server', function() {
+  it('should stop the server', function(done) {
+    server.close();
+    done();
+  });
 });
