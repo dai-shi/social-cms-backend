@@ -43,12 +43,10 @@ describe('user setup', function() {
         form: {
           mode: 'create',
           username: item[0],
-          password: item[1],
-          success_redirect: '/adduser_success'
+          password: item[1]
         }
       }, function(error, response) {
-        assert.equal(response.statusCode, 302);
-        assert.equal(response.headers.location, '/adduser_success');
+        assert.equal(response.statusCode, 200);
         done();
       });
     }, done);
@@ -57,20 +55,23 @@ describe('user setup', function() {
 });
 
 describe('user ownership', function() {
+  var user_id_001;
+
   it('should login as user001', function(done) {
     request.post('http://localhost:' + port + '/login/local', {
+      json: true,
       form: {
         username: 'user001',
-        password: 'pass001',
-        failed_redirect: '/loginfailed',
-        success_redirect: '/loginsuccess'
+        password: 'pass001'
       }
     }, function(error, response) {
-      assert.equal(response.statusCode, 302);
-      assert.equal(response.headers.location, '/loginsuccess');
+      assert.equal(response.statusCode, 200);
+      user_id_001 = response.body._id;
       done();
     });
   });
+
+  var post_id_001;
 
   it('should post a new post', function(done) {
     request.post('http://localhost:' + port + '/posts', {
@@ -79,6 +80,7 @@ describe('user ownership', function() {
       }
     }, function(error, response) {
       assert.equal(response.statusCode, 200, response.body);
+      post_id_001 = response.body._id;
       done();
     });
   });
@@ -87,7 +89,7 @@ describe('user ownership', function() {
     request.post('http://localhost:' + port + '/posts', {
       json: {
         scope: [{
-          user_id: 1
+          user_id: user_id_001
         }],
         content: 'post001-002'
       }
@@ -101,7 +103,7 @@ describe('user ownership', function() {
     request.post('http://localhost:' + port + '/posts', {
       json: {
         scope: [{
-          user_id: 2
+          user_id: user_id_001 + 1
         }],
         content: 'post001-003'
       }
@@ -115,9 +117,9 @@ describe('user ownership', function() {
     request.post('http://localhost:' + port + '/posts', {
       json: {
         scope: [{
-          user_id: 1
+          user_id: user_id_001
         }, {
-          user_id: 2
+          user_id: user_id_001 + 1
         }],
         content: 'post001-004'
       }
@@ -128,7 +130,7 @@ describe('user ownership', function() {
   });
 
   it('should get the public post', function(done) {
-    request.get('http://localhost:' + port + '/posts/1', {
+    request.get('http://localhost:' + port + '/posts/' + post_id_001, {
       json: true
     }, function(error, response) {
       assert.equal(response.statusCode, 200, response.body);
@@ -138,7 +140,7 @@ describe('user ownership', function() {
   });
 
   it('should get the post for user001', function(done) {
-    request.get('http://localhost:' + port + '/posts/2', {
+    request.get('http://localhost:' + port + '/posts/' + (post_id_001 + 1), {
       json: true
     }, function(error, response) {
       assert.equal(response.statusCode, 200, response.body);
@@ -159,33 +161,28 @@ describe('user ownership', function() {
 
   it('should logout user001', function(done) {
     request.post('http://localhost:' + port + '/logout/local', {
-      form: {
-        success_redirect: '/logoutsuccess'
-      }
+      json: true
     }, function(error, response) {
-      assert.equal(response.statusCode, 302);
-      assert.equal(response.headers.location, '/logoutsuccess');
+      assert.equal(response.statusCode, 200);
       done();
     });
   });
 
   it('should login as user002', function(done) {
     request.post('http://localhost:' + port + '/login/local', {
+      json: true,
       form: {
         username: 'user002',
-        password: 'pass002',
-        failed_redirect: '/loginfailed',
-        success_redirect: '/loginsuccess'
+        password: 'pass002'
       }
     }, function(error, response) {
-      assert.equal(response.statusCode, 302);
-      assert.equal(response.headers.location, '/loginsuccess');
+      assert.equal(response.statusCode, 200);
       done();
     });
   });
 
   it('should get the public post', function(done) {
-    request.get('http://localhost:' + port + '/posts/1', {
+    request.get('http://localhost:' + port + '/posts/' + post_id_001, {
       json: true
     }, function(error, response) {
       assert.equal(response.statusCode, 200, response.body);
@@ -195,7 +192,7 @@ describe('user ownership', function() {
   });
 
   it('should fail to get the post for user001', function(done) {
-    request.get('http://localhost:' + port + '/posts/2', {
+    request.get('http://localhost:' + port + '/posts/' + (post_id_001 + 1), {
       json: true
     }, function(error, response) {
       assert.equal(response.statusCode, 404, response.body);

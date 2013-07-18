@@ -87,13 +87,10 @@ describe('form login test', function() {
     request.post('http://localhost:' + port + '/login/local', {
       form: {
         username: 'xxx',
-        password: 'yyy',
-        failed_redirect: '/loginfailed',
-        success_redirect: '/loginsuccess'
+        password: 'yyy'
       }
     }, function(error, response) {
-      assert.equal(response.statusCode, 302);
-      assert.equal(response.headers.location, '/loginfailed');
+      assert.equal(response.statusCode, 500);
       done();
     });
   });
@@ -102,28 +99,24 @@ describe('form login test', function() {
     request.post('http://localhost:' + port + '/login/local', {
       form: {
         username: 'dummyuser',
-        password: '',
-        failed_redirect: '/loginfailed',
-        success_redirect: '/loginsuccess'
+        password: ''
       }
     }, function(error, response) {
-      assert.equal(response.statusCode, 302);
-      assert.equal(response.headers.location, '/loginfailed');
+      assert.equal(response.statusCode, 500);
       done();
     });
   });
 
   it('should login as a user', function(done) {
     request.post('http://localhost:' + port + '/login/local', {
+      json: true,
       form: {
         username: 'dummyuser',
-        password: 'dummypassword',
-        failed_redirect: '/loginfailed',
-        success_redirect: '/loginsuccess'
+        password: 'dummypassword'
       }
     }, function(error, response) {
-      assert.equal(response.statusCode, 302);
-      assert.equal(response.headers.location, '/loginsuccess');
+      assert.equal(response.statusCode, 200);
+      assert.ok(response.body._id);
       done();
     });
   });
@@ -472,15 +465,15 @@ describe('update post test', function() {
 describe('user creation test', function() {
   it('should create a new user', function(done) {
     request.post('http://localhost:' + port + '/login/local', {
+      json: true,
       form: {
         mode: 'create',
         username: 'user001',
-        password: 'password001',
-        success_redirect: '/adduser_success'
+        password: 'password001'
       }
     }, function(error, response) {
-      assert.equal(response.statusCode, 302);
-      assert.equal(response.headers.location, '/adduser_success');
+      assert.equal(response.statusCode, 200);
+      assert.ok(response.body._id);
       done();
     });
   });
@@ -488,8 +481,7 @@ describe('user creation test', function() {
   it('should fail to create a new user without username', function(done) {
     request.post('http://localhost:' + port + '/login/local', {
       form: {
-        mode: 'create',
-        success_redirect: '/adduser_success'
+        mode: 'create'
       }
     }, function(error, response) {
       assert.equal(response.statusCode, 500);
@@ -502,8 +494,7 @@ describe('user creation test', function() {
       form: {
         mode: 'create',
         username: 'dummyuser',
-        password: 'password002',
-        success_redirect: '/adduser_success'
+        password: 'password002'
       }
     }, function(error, response) {
       assert.equal(response.statusCode, 500);
