@@ -37,7 +37,8 @@ describe('user setup', function() {
       ['user002', 'pass002'],
       ['user003', 'pass003'],
       ['user004', 'pass004'],
-      ['user005', 'pass005']
+      ['user005', 'pass005'],
+      ['user006', 'pass006']
     ], function(item, done) {
       request.post('http://localhost:' + port + '/login/local', {
         form: {
@@ -46,7 +47,7 @@ describe('user setup', function() {
           password: item[1]
         }
       }, function(error, response) {
-        assert.equal(response.statusCode, 200);
+        assert.equal(response.statusCode, 200, response.body);
         done();
       });
     }, done);
@@ -56,6 +57,7 @@ describe('user setup', function() {
 
 describe('user ownership', function() {
   var user_id_001;
+  var user_id_002;
 
   it('should login as user001', function(done) {
     request.post('http://localhost:' + port + '/login/local', {
@@ -65,13 +67,15 @@ describe('user ownership', function() {
         password: 'pass001'
       }
     }, function(error, response) {
-      assert.equal(response.statusCode, 200);
-      user_id_001 = response.body._id;
+      assert.equal(response.statusCode, 200, response.body);
+      user_id_001 = response.body.user_id;
+      user_id_002 = user_id_001 + 1;
       done();
     });
   });
 
   var post_id_001;
+  var post_id_002;
 
   it('should post a new post', function(done) {
     request.post('http://localhost:' + port + '/posts', {
@@ -81,6 +85,7 @@ describe('user ownership', function() {
     }, function(error, response) {
       assert.equal(response.statusCode, 200, response.body);
       post_id_001 = response.body._id;
+      post_id_002 = post_id_001 + 1;
       done();
     });
   });
@@ -103,7 +108,7 @@ describe('user ownership', function() {
     request.post('http://localhost:' + port + '/posts', {
       json: {
         scope: [{
-          user_id: user_id_001 + 1
+          user_id: user_id_002
         }],
         content: 'post001-003'
       }
@@ -119,7 +124,7 @@ describe('user ownership', function() {
         scope: [{
           user_id: user_id_001
         }, {
-          user_id: user_id_001 + 1
+          user_id: user_id_002
         }],
         content: 'post001-004'
       }
@@ -140,7 +145,7 @@ describe('user ownership', function() {
   });
 
   it('should get the post for user001', function(done) {
-    request.get('http://localhost:' + port + '/posts/' + (post_id_001 + 1), {
+    request.get('http://localhost:' + port + '/posts/' + post_id_002, {
       json: true
     }, function(error, response) {
       assert.equal(response.statusCode, 200, response.body);
@@ -159,11 +164,24 @@ describe('user ownership', function() {
     });
   });
 
+  it('should update the public post by user001', function(done) {
+    request.put('http://localhost:' + port + '/posts/' + post_id_001, {
+      json: {
+        $set: {
+          foo: 'bar'
+        }
+      }
+    }, function(error, response) {
+      assert.equal(response.statusCode, 200, response.body);
+      done();
+    });
+  });
+
   it('should logout user001', function(done) {
     request.post('http://localhost:' + port + '/logout/local', {
       json: true
     }, function(error, response) {
-      assert.equal(response.statusCode, 200);
+      assert.equal(response.statusCode, 200, response.body);
       done();
     });
   });
@@ -176,7 +194,7 @@ describe('user ownership', function() {
         password: 'pass002'
       }
     }, function(error, response) {
-      assert.equal(response.statusCode, 200);
+      assert.equal(response.statusCode, 200, response.body);
       done();
     });
   });
@@ -192,7 +210,7 @@ describe('user ownership', function() {
   });
 
   it('should fail to get the post for user001', function(done) {
-    request.get('http://localhost:' + port + '/posts/' + (post_id_001 + 1), {
+    request.get('http://localhost:' + port + '/posts/' + post_id_002, {
       json: true
     }, function(error, response) {
       assert.equal(response.statusCode, 404, response.body);
@@ -200,23 +218,116 @@ describe('user ownership', function() {
     });
   });
 
+  it('should fail to update the public post by user001', function(done) {
+    request.put('http://localhost:' + port + '/posts/' + post_id_001, {
+      json: {
+        $set: {
+          foo: 'bar'
+        }
+      }
+    }, function(error, response) {
+      assert.equal(response.statusCode, 500, response.body);
+      done();
+    });
+  });
+
+  it('should logout user002', function(done) {
+    request.post('http://localhost:' + port + '/logout/local', {
+      json: true
+    }, function(error, response) {
+      assert.equal(response.statusCode, 200, response.body);
+      done();
+    });
+  });
+
+});
+
+
+describe('user friendship', function() {
+  var user_id_003;
+  var user_id_004;
+
+  it('should login as user003', function(done) {
+    request.post('http://localhost:' + port + '/login/local', {
+      json: true,
+      form: {
+        username: 'user003',
+        password: 'pass003'
+      }
+    }, function(error, response) {
+      assert.equal(response.statusCode, 200, response.body);
+      user_id_003 = response.body.user_id;
+      user_id_004 = user_id_003 + 1;
+      done();
+    });
+  });
+
+  it('should make user004 as a friend', function(done) {
+    request.put('http://localhost:' + port + '/users/' + user_id_003, {
+      json: {
+        $push: {
+          friends: {
+            user_id: user_id_004
+          }
+        }
+      }
+    }, function(error, response) {
+      assert.equal(response.statusCode, 200, response.body);
+      done();
+    });
+  });
+
+  it('should logout user003', function(done) {
+    request.post('http://localhost:' + port + '/logout/local', {
+      json: true
+    }, function(error, response) {
+      assert.equal(response.statusCode, 200, response.body);
+      done();
+    });
+  });
+
+  it('should login as user004', function(done) {
+    request.post('http://localhost:' + port + '/login/local', {
+      json: true,
+      form: {
+        username: 'user004',
+        password: 'pass004'
+      }
+    }, function(error, response) {
+      assert.equal(response.statusCode, 200, response.body);
+      done();
+    });
+  });
+
+  it('should make user003 as a friend', function(done) {
+    request.put('http://localhost:' + port + '/users/' + user_id_004, {
+      json: {
+        $push: {
+          friends: {
+            user_id: user_id_003
+          }
+        }
+      }
+    }, function(error, response) {
+      assert.equal(response.statusCode, 200, response.body);
+      done();
+    });
+  });
+
+
+  //TODO friend post scope
+
+
+
+
 
 
 });
 
 
-
-
-
-
-
-
-
-
-
-
-
-
+describe('group membership', function() {
+  //TODO
+});
 
 describe('shutdown server', function() {
   it('should stop the server', function(done) {

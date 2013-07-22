@@ -116,7 +116,7 @@ describe('form login test', function() {
       }
     }, function(error, response) {
       assert.equal(response.statusCode, 200);
-      assert.ok(response.body._id);
+      assert.ok(response.body.user_id);
       done();
     });
   });
@@ -473,7 +473,7 @@ describe('user creation test', function() {
       }
     }, function(error, response) {
       assert.equal(response.statusCode, 200);
-      assert.ok(response.body._id);
+      assert.ok(response.body.user_id);
       done();
     });
   });
