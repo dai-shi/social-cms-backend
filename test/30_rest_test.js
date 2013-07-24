@@ -352,6 +352,41 @@ describe('get post test', function() {
 
 });
 
+describe('count post test', function() {
+  it('should count posts', function(done) {
+    request.get({
+      url: 'http://localhost:' + port + '/posts/count',
+      json: true,
+      qs: {
+        query: JSON.stringify({
+          foo: 'bar'
+        })
+      }
+    }, function(error, response) {
+      assert.equal(response.statusCode, 200, response.body);
+      assert.equal(response.body.count, 4);
+      done();
+    });
+  });
+
+  it('should fail to query posts', function(done) {
+    request.get({
+      url: 'http://localhost:' + port + '/posts/count',
+      json: true,
+      qs: {
+        query: JSON.stringify({
+          foo: 'xxx'
+        })
+      }
+    }, function(error, response) {
+      assert.equal(response.statusCode, 200, response.body);
+      assert.equal(response.body.count, 0);
+      done();
+    });
+  });
+
+});
+
 describe('query post test', function() {
   it('should query posts', function(done) {
     request.get({
