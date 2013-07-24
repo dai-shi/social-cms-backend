@@ -18,5 +18,5 @@ APIs
 TODOs
 -----
 
-* Authentication: email(digest passwd), facebook
+* Authentication: email(digest auth), facebook
 * Notification: email, facebook

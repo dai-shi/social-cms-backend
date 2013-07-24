@@ -314,19 +314,166 @@ describe('user friendship', function() {
     });
   });
 
+  var post_id_003;
 
-  //TODO friend post scope
+  it('should post a new post for user003 & user004', function(done) {
+    request.post('http://localhost:' + port + '/posts', {
+      json: {
+        scope: [{
+          user_id: user_id_003
+        }, {
+          user_id: user_id_004
+        }],
+        content: 'post002-001'
+      }
+    }, function(error, response) {
+      assert.equal(response.statusCode, 200, response.body);
+      post_id_003 = response.body._id;
+      done();
+    });
+  });
 
+  it('should get the post for user004', function(done) {
+    request.get('http://localhost:' + port + '/posts/' + post_id_003, {
+      json: true
+    }, function(error, response) {
+      assert.equal(response.statusCode, 200, response.body);
+      assert.equal(response.body.content, 'post002-001');
+      done();
+    });
+  });
 
+  it('should logout user004', function(done) {
+    request.post('http://localhost:' + port + '/logout/local', {
+      json: true
+    }, function(error, response) {
+      assert.equal(response.statusCode, 200, response.body);
+      done();
+    });
+  });
 
+  it('should login as user003', function(done) {
+    request.post('http://localhost:' + port + '/login/local', {
+      json: true,
+      form: {
+        username: 'user003',
+        password: 'pass003'
+      }
+    }, function(error, response) {
+      assert.equal(response.statusCode, 200, response.body);
+      done();
+    });
+  });
 
-
+  it('should get the post for user003', function(done) {
+    request.get('http://localhost:' + port + '/posts/' + post_id_003, {
+      json: true
+    }, function(error, response) {
+      assert.equal(response.statusCode, 200, response.body);
+      assert.equal(response.body.content, 'post002-001');
+      done();
+    });
+  });
 
 });
 
 
 describe('group membership', function() {
-  //TODO
+  var user_id_005;
+  var user_id_006;
+
+  it('should login as user005', function(done) {
+    request.post('http://localhost:' + port + '/login/local', {
+      json: true,
+      form: {
+        username: 'user005',
+        password: 'pass005'
+      }
+    }, function(error, response) {
+      assert.equal(response.statusCode, 200, response.body);
+      user_id_005 = response.body.user_id;
+      user_id_006 = user_id_005 + 1;
+      done();
+    });
+  });
+
+  var group_id_001;
+
+  it('should create a group', function(done) {
+    request.post('http://localhost:' + port + '/groups', {
+      json: {
+        members: [{
+          user_id: user_id_005
+        }, {
+          user_id: user_id_006
+        }]
+      }
+    }, function(error, response) {
+      assert.equal(response.statusCode, 200, response.body);
+      group_id_001 = response.body._id;
+      done();
+    });
+  });
+
+  var post_id_004;
+
+  it('should post a new post for the group', function(done) {
+    request.post('http://localhost:' + port + '/posts', {
+      json: {
+        scope: [{
+          group_id: group_id_001
+        }],
+        content: 'post003-001'
+      }
+    }, function(error, response) {
+      assert.equal(response.statusCode, 200, response.body);
+      post_id_004 = response.body._id;
+      done();
+    });
+  });
+
+  it('should get the post for the group (user005)', function(done) {
+    request.get('http://localhost:' + port + '/posts/' + post_id_004, {
+      json: true
+    }, function(error, response) {
+      assert.equal(response.statusCode, 200, response.body);
+      assert.equal(response.body.content, 'post003-001');
+      done();
+    });
+  });
+
+  it('should logout user005', function(done) {
+    request.post('http://localhost:' + port + '/logout/local', {
+      json: true
+    }, function(error, response) {
+      assert.equal(response.statusCode, 200, response.body);
+      done();
+    });
+  });
+
+  it('should login as user006', function(done) {
+    request.post('http://localhost:' + port + '/login/local', {
+      json: true,
+      form: {
+        username: 'user006',
+        password: 'pass006'
+      }
+    }, function(error, response) {
+      assert.equal(response.statusCode, 200, response.body);
+      done();
+    });
+  });
+
+  it('should get the post for the group (user006)', function(done) {
+    request.get('http://localhost:' + port + '/posts/' + post_id_004, {
+      json: true
+    }, function(error, response) {
+      assert.equal(response.statusCode, 200, response.body);
+      assert.equal(response.body.content, 'post003-001');
+      done();
+    });
+  });
+
 });
 
 describe('shutdown server', function() {
