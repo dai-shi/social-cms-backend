@@ -68,13 +68,15 @@ describe('initialize database', function() {
 
 });
 
+var server;
+
 describe('initialize server', function() {
   it('should start the server', function(done) {
     var app = express();
     app.use(SCB.middleware({
       mongodb_url: mongodb_url
     }));
-    app.listen(port);
+    server = app.listen(port);
     //wait a while for the mongodb connection to be ready
     setTimeout(done, 300);
   });
@@ -85,13 +87,10 @@ describe('form login test', function() {
     request.post('http://localhost:' + port + '/login/local', {
       form: {
         username: 'xxx',
-        password: 'yyy',
-        failed_redirect: '/loginfailed',
-        success_redirect: '/loginsuccess'
+        password: 'yyy'
       }
     }, function(error, response) {
-      assert.equal(response.statusCode, 302);
-      assert.equal(response.headers.location, '/loginfailed');
+      assert.equal(response.statusCode, 500);
       done();
     });
   });
@@ -100,28 +99,24 @@ describe('form login test', function() {
     request.post('http://localhost:' + port + '/login/local', {
       form: {
         username: 'dummyuser',
-        password: '',
-        failed_redirect: '/loginfailed',
-        success_redirect: '/loginsuccess'
+        password: ''
       }
     }, function(error, response) {
-      assert.equal(response.statusCode, 302);
-      assert.equal(response.headers.location, '/loginfailed');
+      assert.equal(response.statusCode, 500);
       done();
     });
   });
 
   it('should login as a user', function(done) {
     request.post('http://localhost:' + port + '/login/local', {
+      json: true,
       form: {
         username: 'dummyuser',
-        password: 'dummypassword',
-        failed_redirect: '/loginfailed',
-        success_redirect: '/loginsuccess'
+        password: 'dummypassword'
       }
     }, function(error, response) {
-      assert.equal(response.statusCode, 302);
-      assert.equal(response.headers.location, '/loginsuccess');
+      assert.equal(response.statusCode, 200);
+      assert.ok(response.body.user_id);
       done();
     });
   });
@@ -357,6 +352,41 @@ describe('get post test', function() {
 
 });
 
+describe('count post test', function() {
+  it('should count posts', function(done) {
+    request.get({
+      url: 'http://localhost:' + port + '/posts/count',
+      json: true,
+      qs: {
+        query: JSON.stringify({
+          foo: 'bar'
+        })
+      }
+    }, function(error, response) {
+      assert.equal(response.statusCode, 200, response.body);
+      assert.equal(response.body.count, 4);
+      done();
+    });
+  });
+
+  it('should fail to query posts', function(done) {
+    request.get({
+      url: 'http://localhost:' + port + '/posts/count',
+      json: true,
+      qs: {
+        query: JSON.stringify({
+          foo: 'xxx'
+        })
+      }
+    }, function(error, response) {
+      assert.equal(response.statusCode, 200, response.body);
+      assert.equal(response.body.count, 0);
+      done();
+    });
+  });
+
+});
+
 describe('query post test', function() {
   it('should query posts', function(done) {
     request.get({
@@ -467,15 +497,51 @@ describe('update post test', function() {
 
 });
 
-/*
-describe('create group test');
-describe('get group test');
-describe('query group test');
-describe('delete group test');
-describe('update group test');
+describe('user creation test', function() {
+  it('should create a new user', function(done) {
+    request.post('http://localhost:' + port + '/login/local', {
+      json: true,
+      form: {
+        mode: 'create',
+        username: 'user001',
+        password: 'password001'
+      }
+    }, function(error, response) {
+      assert.equal(response.statusCode, 200);
+      assert.ok(response.body.user_id);
+      done();
+    });
+  });
 
-describe('create user test');
-describe('query user test');
-describe('delete user test');
-describe('update user test');
-*/
+  it('should fail to create a new user without username', function(done) {
+    request.post('http://localhost:' + port + '/login/local', {
+      form: {
+        mode: 'create'
+      }
+    }, function(error, response) {
+      assert.equal(response.statusCode, 500);
+      done();
+    });
+  });
+
+  it('should fail to create an existing use', function(done) {
+    request.post('http://localhost:' + port + '/login/local', {
+      form: {
+        mode: 'create',
+        username: 'dummyuser',
+        password: 'password002'
+      }
+    }, function(error, response) {
+      assert.equal(response.statusCode, 500);
+      done();
+    });
+  });
+
+});
+
+describe('shutdown server', function() {
+  it('should stop the server', function(done) {
+    server.close();
+    done();
+  });
+});
