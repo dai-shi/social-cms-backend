@@ -53,7 +53,7 @@ Videos
 
 ### How to create a Twitter clone in 15 minutes
 
-<a href="http://dai-shi.github.io/social-cms-backend/ttyplay.html" target="_blank">Click here</a>.
+<a href="http://dai-shi.github.io/social-cms-backend/jsttyplay/ttyplay.html" target="_blank">Click here</a>. (oops, it stops after a while.)
 
 Notes:
 * This is still a trial recording.
