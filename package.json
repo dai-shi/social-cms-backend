@@ -11,9 +11,9 @@
     "passport-local": "~0.1.6"
   },
   "devDependencies": {
-    "express": "*",
-    "request": "*",
-    "mocha": "*"
+    "express": "~3.2.6",
+    "request": "~2.21.0",
+    "mocha": "~1.11.0"
   },
   "repository": {
     "type": "git",
@@ -28,7 +28,7 @@
   ],
   "main": "./lib/index.js",
   "scripts": {
-    "test": "./node_modules/.bin/mocha test/*.js"
+    "test": "./node_modules/.bin/mocha ./test/*.js"
   },
   "license": "BSD",
   "engines": {
