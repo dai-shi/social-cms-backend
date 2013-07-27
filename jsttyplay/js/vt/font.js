@@ -8,7 +8,7 @@ var VTFont = (function(){
     var fonts = { };
     var fonts_loading = { };
 
-    var base = "./fonts/";
+    var base = "./jsttyplay/fonts/";
     var setBase = function (baseurl) {
         base = baseurl;
     };
