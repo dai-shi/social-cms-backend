@@ -48,17 +48,21 @@ A special endpoint:
 
     GET /users/myself
 
-Videos
-------
+Screencast
+----------
 
 ### How to create a Twitter clone in 15 minutes
 
-<a href="http://dai-shi.github.io/social-cms-backend/jsttyplay/ttyplay.html" target="_blank">Click here</a>. (oops, it stops after a while.)
+Preview:
+
+<img src="http://dai-shi.github.io/social-cms-backend/jsttyplay/ttyrecord.gif" />
+
+<a href="http://dai-shi.github.io/social-cms-backend/jsttyplay/ttyplay.html" target="_blank">Click here</a> to see a better one.
 
 Notes:
 * This is still a trial recording.
 * The result isn't working yet (no authentication logic).
-* I found two bugs after recording.
+* I found a bug after this recording.
 
 TODOs
 -----
