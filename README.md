@@ -55,7 +55,7 @@ Screencast
 
 Preview:
 
-<img src="http://dai-shi.github.io/social-cms-backend/jsttyplay/ttyrecord.gif" />
+<img src="http://dai-shi.github.io/social-cms-backend/ttyrecord.gif" />
 
 <a href="http://dai-shi.github.io/social-cms-backend/jsttyplay/ttyplay.html" target="_blank">Click here</a> to see a better one.
 
