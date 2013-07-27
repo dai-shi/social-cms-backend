@@ -6,7 +6,7 @@ Express middleware to provide schema-less REST APIs for creating a social networ
 How to install
 --------------
 
-    $ npm install https://github.com/dai-shi/social-cms-backend/tarball/master
+    $ npm install social-cms-backend
 
 How to use
 ----------
@@ -31,12 +31,22 @@ By default, there are 4 objects:
 The following is the example of the post object endpoints.
 
     POST /posts
+
     GET /posts?query=...
+
     GET /posts/inbox
+
     GET /posts/count
+
     GET /posts/123
+
     PUT /posts/123
+
     DELETE /posts/123
+
+A special endpoint:
+
+    GET /users/myself
 
 Videos
 ------
