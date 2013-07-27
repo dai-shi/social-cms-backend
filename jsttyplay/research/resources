@@ -1,0 +1,13 @@
+terminal parsing:
+http://www.vt100.net/docs/vt102-ug/chapter5.html
+http://www.asciitable.com/
+http://www.vt100.net/docs/vt320-uu/appendixe.html
+http://cvs.schmorp.de/rxvt-unicode/src/command.C?revision=1.415&view=markup
+http://www.vt100.net/docs/vt220-rm/chapter4.html
+http://www.linuxquestions.org/questions/linux-general-1/ls-ls-colortty-13689/
+http://www.ibiblio.org/pub/historic-linux/ftp-archives/tsx-11.mit.edu/Oct-07-1996/info/vt102.codes
+http://www.unix.com/sun-solaris/23038-change-terminal-title.html
+http://web.kuicr.kyoto-u.ac.jp/~hattori/non-research/memo/tools/xterm.seq
+
+pty management:
+http://man-wiki.net/index.php/4:tty_ioctl

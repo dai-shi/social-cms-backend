@@ -1,0 +1,37 @@
+scr_do_wrap
+	if wrapnext:
+	col = 0
+	clear wrapnext
+	scroll if at end, otherwise row++
+
+on key LF:
+	clear wrapnext
+
+on key CR:
+	clear wrapnext
+
+if key > 0x20:
+	if wrapnext:
+		scr_do_wrap
+	if char brings us to col == width and autowrap:
+		set wrapnext
+
+on cursor position jump:
+	clear wrapnext
+
+on INDEX and REVERSE INDEX:
+	clear wrapnext
+
+on reset autowrap:
+	clear wrapnext
+
+on insert/delete lines:
+	scr_do_wrap
+	scroll
+
+on insert/delete characters:
+	scr_do_Wrap
+	insert chars
+
+on cursor restore:
+	clear wrapnext
