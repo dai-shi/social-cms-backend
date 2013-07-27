@@ -63,6 +63,7 @@ Videos
 <script src="http://dai-shi.github.io/social-cms-backend/javascripts/ttyplay.js"></script>
 <canvas id="canvas" width="80" height="30">
 <a href="http://dai-shi.github.io/social-cms-backend/">Visit the GitHub page</a>
+<img src="http://dai-shi.github.io/social-cms-backend/images/ribbon-tail-sprite.png" />
 </canvas>
 <input type="button" value="Play" id="play" />
 <input type="button" value="Pause" id="pause" />
@@ -80,10 +81,4 @@ TODOs
 
 * Authentication: email(digest auth), facebook
 * Notification: email, facebook
-
-Testing
--------
-
-<iframe src="http://dai-shi.github.io/social-cms-backend/">
-</iframe>
 
