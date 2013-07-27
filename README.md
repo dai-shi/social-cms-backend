@@ -80,3 +80,10 @@ TODOs
 
 * Authentication: email(digest auth), facebook
 * Notification: email, facebook
+
+Testing
+-------
+
+<iframe src="http://dai-shi.github.io/social-cms-backend/">
+</iframe>
+
