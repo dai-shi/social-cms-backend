@@ -51,7 +51,8 @@ A special endpoint:
 Videos
 ------
 
-### How to create a Twitter clone in 15 minutes (still under recording)
+### How to create a Twitter clone in 15 minutes
+(still under recording)
 
 <script src="http://dai-shi.github.io/social-cms-backend/jsttyplay/js/vt/parse.js"></script>
 <script src="http://dai-shi.github.io/social-cms-backend/jsttyplay/js/vt/emulate.js"></script>
@@ -60,7 +61,9 @@ Videos
 <script src="http://dai-shi.github.io/social-cms-backend/jsttyplay/js/vt/font.js"></script>
 <script src="http://dai-shi.github.io/social-cms-backend/jsttyplay/js/vt/canvasview.js"></script>
 <script src="http://dai-shi.github.io/social-cms-backend/javascripts/ttyplay.js"></script>
-<canvas id="canvas" width="80" height="30">No canvas support!</canvas>
+<canvas id="canvas" width="80" height="30">
+<a href="http://dai-shi.github.io/social-cms-backend/">Visit the GitHub page</a>
+</canvas>
 <input type="button" value="Play" id="play" />
 <input type="button" value="Pause" id="pause" />
 <input type="button" value="PlayPause" id="playpause" />
