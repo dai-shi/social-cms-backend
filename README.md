@@ -52,27 +52,11 @@ Videos
 ------
 
 ### How to create a Twitter clone in 15 minutes
-(still under recording)
 
-<script src="http://dai-shi.github.io/social-cms-backend/jsttyplay/js/vt/parse.js"></script>
-<script src="http://dai-shi.github.io/social-cms-backend/jsttyplay/js/vt/emulate.js"></script>
-<script src="http://dai-shi.github.io/social-cms-backend/jsttyplay/js/ttyrec-browser.js"></script>
-<script src="http://dai-shi.github.io/social-cms-backend/jsttyplay/js/binary-read.js"></script>
-<script src="http://dai-shi.github.io/social-cms-backend/jsttyplay/js/vt/font.js"></script>
-<script src="http://dai-shi.github.io/social-cms-backend/jsttyplay/js/vt/canvasview.js"></script>
-<script src="http://dai-shi.github.io/social-cms-backend/javascripts/ttyplay.js"></script>
-<canvas id="canvas" width="80" height="30">
-<a href="http://dai-shi.github.io/social-cms-backend/">Visit the GitHub page</a>
-<img src="http://dai-shi.github.io/social-cms-backend/images/ribbon-tail-sprite.png" />
-</canvas>
-<input type="button" value="Play" id="play" />
-<input type="button" value="Pause" id="pause" />
-<input type="button" value="PlayPause" id="playpause" />
-<input type="button" value="Freeze" id="freeze" />
-<input type="button" value="Thaw" id="thaw" />
-<input type="button" value="Rewind" id="rewind" />
+<a href="http://dai-shi.github.io/social-cms-backend/ttyplay.html" target="_blank">Click here</a>.
 
 Notes:
+* This is still a trial recording.
 * The result isn't working yet (no authentication logic).
 * I found two bugs after recording.
 
