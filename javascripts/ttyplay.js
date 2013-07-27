@@ -67,18 +67,15 @@ get_binary_data_async(ttyrecord_url, function(data, err) {
 setTimeout(function() {
   var freezeData;
 
+  document.getElementById("play").addEventListener('click', function(evt) {
+    if (!nextFrameTimeout) go();
+    evt.preventDefault();
+  }, false);
   document.getElementById("pause").addEventListener('click', function(evt) {
     if (nextFrameTimeout) {
       clearTimeout(nextFrameTimeout);
       nextFrameTimeout = null;
     }
-    evt.preventDefault();
-  }, false);
-  document.getElementById("play").addEventListener('click', function(evt) {
-    if (!nextFrameTimeout) go();
-    evt.preventDefault();
-  }, false);
-  document.getElementById("playpause").addEventListener('click', function(evt) {
     evt.preventDefault();
   }, false);
   document.getElementById("freeze").addEventListener('click', function(evt) {
