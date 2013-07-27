@@ -6,7 +6,7 @@ Express middleware to provide schema-less REST APIs for creating a social networ
 How to install
 --------------
 
-    % npm install https://github.com/dai-shi/social-cms-backend/tarball/master
+    $ npm install https://github.com/dai-shi/social-cms-backend/tarball/master
 
 How to use
 ----------
