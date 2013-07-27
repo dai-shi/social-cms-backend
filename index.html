@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=640" />
+
+    <link rel="stylesheet" href="stylesheets/core.css" media="screen"/>
+    <link rel="stylesheet" href="stylesheets/mobile.css" media="handheld, only screen and (max-device-width:640px)"/>
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css"/>
+
+    <script type="text/javascript" src="javascripts/modernizr.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script type="text/javascript" src="javascripts/headsmart.min.js"></script>
+    <script type="text/javascript">
+      $(document).ready(function () {
+        $('#main_content').headsmart()
+      })
+    </script>
+    <title>Social-cms-backend by dai-shi</title>
+  </head>
+
+  <body>
+    <a id="forkme_banner" href="https://github.com/dai-shi/social-cms-backend">View on GitHub</a>
+    <div class="shell">
+
+      <header>
+        <span class="ribbon-outer">
+          <span class="ribbon-inner">
+            <h1>Social-cms-backend</h1>
+            <h2>Express middleware to provide schema-less REST APIs for creating a social networking website primarily using angular.js. It comes with built-in authentication, authorization and notification features.</h2>
+          </span>
+          <span class="left-tail"></span>
+          <span class="right-tail"></span>
+        </span>
+      </header>
+
+      <section id="downloads">
+        <span class="inner">
+          <a href="https://github.com/dai-shi/social-cms-backend/zipball/master" class="zip"><em>download</em> .ZIP</a><a href="https://github.com/dai-shi/social-cms-backend/tarball/master" class="tgz"><em>download</em> .TGZ</a>
+        </span>
+      </section>
+
+
+      <span class="banner-fix"></span>
+
+
+      <section id="main_content">
+        <h1>
+<a name="social-cms-backend" class="anchor" href="#social-cms-backend"><span class="octicon octicon-link"></span></a>social-cms-backend</h1>
+
+<p>Express middleware to provide schema-less REST APIs for creating a social networking website primarily using angular.js. It comes with built-in authentication, authorization and notification features.</p>
+
+<h2>
+<a name="how-to-install" class="anchor" href="#how-to-install"><span class="octicon octicon-link"></span></a>How to install</h2>
+
+<pre><code>$ npm install social-cms-backend
+</code></pre>
+
+<h2>
+<a name="how-to-use" class="anchor" href="#how-to-use"><span class="octicon octicon-link"></span></a>How to use</h2>
+
+<pre><code>var express = require('express');
+var SCB = require('social-cms-backend');
+var app = express();
+app.use(SCB.middleware({
+  mongodb_url: 'mongodb://localhost:27017/socialcmsdb'
+}));
+app.listen(3000);
+</code></pre>
+
+<h2>
+<a name="rest-apis" class="anchor" href="#rest-apis"><span class="octicon octicon-link"></span></a>REST APIs</h2>
+
+<p>By default, there are 4 objects:</p>
+
+<ul>
+<li>post</li>
+<li>user</li>
+<li>group</li>
+<li>like</li>
+</ul><p>The following is the example of the post object endpoints.</p>
+
+<pre><code>POST /posts
+
+GET /posts?query=...
+
+GET /posts/inbox
+
+GET /posts/count
+
+GET /posts/123
+
+PUT /posts/123
+
+DELETE /posts/123
+</code></pre>
+
+<p>A special endpoint:</p>
+
+<pre><code>GET /users/myself
+</code></pre>
+
+<h2>
+<a name="videos" class="anchor" href="#videos"><span class="octicon octicon-link"></span></a>Videos</h2>
+
+<h3>
+<a name="how-to-create-a-twitter-clone-in-15-minutes" class="anchor" href="#how-to-create-a-twitter-clone-in-15-minutes"><span class="octicon octicon-link"></span></a>How to create a Twitter clone in 15 minutes</h3>
+
+<p>(Now under recording...)</p>
+
+<h2>
+<a name="todos" class="anchor" href="#todos"><span class="octicon octicon-link"></span></a>TODOs</h2>
+
+<ul>
+<li>Authentication: email(digest auth), facebook</li>
+<li>Notification: email, facebook</li>
+</ul>
+      </section>
+
+      <footer>
+        <span class="ribbon-outer">
+          <span class="ribbon-inner">
+            <p>this project by <a href="https://github.com/dai-shi">dai-shi</a> can be found on <a href="https://github.com/dai-shi/social-cms-backend">GitHub</a></p>
+          </span>
+          <span class="left-tail"></span>
+          <span class="right-tail"></span>
+        </span>
+        <p>Generated with <a href="http://pages.github.com">GitHub Pages</a> using Merlot</p>
+        <span class="octocat"></span>
+      </footer>
+
+    </div>
+
+    
+  </body>
+</html>
