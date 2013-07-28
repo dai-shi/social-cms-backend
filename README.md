@@ -53,7 +53,7 @@ Screencast
 
 ### How to create a Twitter clone in 15 minutes
 
-Screencast preview:
+Screencast preview (double speed):
 
 ![Preview](https://raw.github.com/dai-shi/social-cms-backend/gh-pages/ttyrecord.gif)
 
