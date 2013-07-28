@@ -62,7 +62,7 @@ Screencast preview (double speed):
 Notes:
 * This is still a trial recording.
 * The result isn't working yet (no authentication logic).
-* I found a bug in the screencast after this recording.
+* I found a bug after this recording.
 
 TODOs
 -----
