@@ -55,7 +55,7 @@ Screencast
 
 Screencast preview (double speed):
 
-![Preview](https://raw.github.com/dai-shi/social-cms-backend/gh-pages/ttyrecord.gif)
+![Preview loading...](https://raw.github.com/dai-shi/social-cms-backend/gh-pages/ttyrecord.gif)
 
 <a href="http://dai-shi.github.io/social-cms-backend/ttyplay.html" target="_blank">Click here</a> to see a better one.
 
