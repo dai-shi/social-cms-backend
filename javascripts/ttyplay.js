@@ -104,17 +104,15 @@ setTimeout(function() {
   document.getElementById("rewind").addEventListener('click', function(evt) {
     evt.preventDefault();
     var wasplaying = false;
-    if (freezeData) {
-      if (nextFrameTimeout) {
-        wasplaying = true;
-        clearTimeout(nextFrameTimeout);
-        nextFrameTimeout = null;
-      }
-
-      nextFrameIdx = initialState.nextFrameIdx;
-      vtview.thaw(initialState.vtview);
-      vtview.draw();
-      if (wasplaying) go();
+    if (nextFrameTimeout) {
+      wasplaying = true;
+      clearTimeout(nextFrameTimeout);
+      nextFrameTimeout = null;
     }
+
+    nextFrameIdx = initialState.nextFrameIdx;
+    vtview.thaw(initialState.vtview);
+    vtview.draw();
+    if (wasplaying) go();
   }, false);
 }, 100);
