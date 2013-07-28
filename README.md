@@ -70,6 +70,6 @@ Notes:
 TODOs
 -----
 
-* Authentication: email(digest auth), facebook
+* Authentication: email(digest auth)
 * Notification: email, facebook
 
