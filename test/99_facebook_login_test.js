@@ -4,6 +4,9 @@ var express = require('express');
 var request = require('request');
 var MongoClient = require('mongodb').MongoClient;
 var mongodb_url = process.env.MONGODB_URL || 'mongodb://localhost:27017/socialcmsdb_test';
+var facebook_app_id = process.env.FACEBOOK_APP_ID;
+var facebook_app_secret = process.env.FACEBOOK_APP_SECRET;
+var test_ready = facebook_app_id && facebook_app_secret && true;
 var SCB = require('../lib/index.js');
 var port = process.env.PORT || 27891;
 
@@ -20,10 +23,13 @@ var server;
 
 describe('initialize server', function() {
   it('should start the server', function(done) {
+    if (!test_ready) return done();
     var app = express();
     app.use(SCB.middleware({
       mongodb_url: mongodb_url,
-      passport_strategy: 'facebook'
+      passport_strategy: 'facebook',
+      facebook_app_id: facebook_app_id,
+      facebook_app_secret: facebook_app_secret
     }));
     server = app.listen(port);
     //wait a while for the mongodb connection to be ready
@@ -32,6 +38,6 @@ describe('initialize server', function() {
 });
 
 
-describe('authorization with facebook', function(){
+describe('authorization with facebook', function() {
   it('should login in with a facebook account');
 });

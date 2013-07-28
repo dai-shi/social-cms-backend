@@ -15,7 +15,10 @@ How to use
     var SCB = require('social-cms-backend');
     var app = express();
     app.use(SCB.middleware({
-      mongodb_url: 'mongodb://localhost:27017/socialcmsdb'
+      mongodb_url: 'mongodb://localhost:27017/socialcmsdb',
+      passport_strategy: 'facebook',
+      facebook_app_id: process.env.FACEBOOK_APP_ID,
+      facebook_app_secret: process.env.FACEBOOK_APP_SECRET
     }));
     app.listen(3000);
 
