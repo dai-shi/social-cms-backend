@@ -60,9 +60,10 @@ Screencast preview (double speed):
 
 ![Preview loading...](https://raw.github.com/dai-shi/social-cms-backend/gh-pages/ttyrecord.gif)
 
-<a href="http://dai-shi.github.io/social-cms-backend/ttyplay.html" target="_blank">Click here</a> to see a better one.
+<a href="http://dai-shi.github.io/social-cms-backend/ttyplay.html" target="_blank">Controllable screencast</a>
 
 Notes:
+
 * This is still a trial recording.
 * The result isn't working yet (no authentication logic).
 * I found a bug after this recording.
