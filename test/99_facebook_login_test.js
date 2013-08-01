@@ -8,6 +8,9 @@ var facebook_app_secret = process.env.FACEBOOK_APP_SECRET;
 var facebook_login_id = process.env.FACEBOOK_LOGIN_ID;
 var facebook_login_pass = process.env.FACEBOOK_LOGIN_PASS;
 var test_ready = facebook_app_id && facebook_app_secret && facebook_login_id && facebook_login_pass && true;
+if (!test_ready) {
+  console.log('Not enough envvars for Facebook test, skipping...');
+}
 var SCB = require('../lib/index.js');
 var port = process.env.PORT || 27891;
 var cheerio = require('cheerio');
