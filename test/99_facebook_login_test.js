@@ -9,6 +9,7 @@ var facebook_app_secret = process.env.FACEBOOK_APP_SECRET;
 var test_ready = facebook_app_id && facebook_app_secret && true;
 var SCB = require('../lib/index.js');
 var port = process.env.PORT || 27891;
+var cheerio = require('cheerio');
 
 describe('initialize database', function() {
   it('should clear the test database', function(done) {
@@ -39,5 +40,28 @@ describe('initialize server', function() {
 
 
 describe('authorization with facebook', function() {
-  it('should login in with a facebook account');
+  var fb_id   = process.env.FB_ID;
+  var fb_pass = process.env.FB_PASS;
+  it('should login in with a facebook account', function (done) {
+    if(!fb_id || !fb_pass){
+      throw Error('FB_ID and FB_PASS are not provided.');
+    } else {
+      request.get('http://localhost:' + port + '/login/facebook',
+      function(error, response) {
+        var dom = cheerio.load(response.body);
+        //request.post('https://www.facebook.com/login.php', {
+        request.post('https://www.facebook.com/login.php?login_attempt=1', {
+          lsd: dom('input[name=lsd]').val(),
+          email: fb_id,
+          pass: fb_pass
+        }, function (error, response) {
+          assert.equal(response.statusCode, 302);
+          assert.ok(response.socket.authorized);
+
+          //TODO check if it redirected to callback page or not
+          done();
+        });
+      });
+    }
+  });
 });
