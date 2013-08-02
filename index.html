@@ -64,7 +64,10 @@
 var SCB = require('social-cms-backend');
 var app = express();
 app.use(SCB.middleware({
-  mongodb_url: 'mongodb://localhost:27017/socialcmsdb'
+  mongodb_url: 'mongodb://localhost:27017/socialcmsdb',
+  passport_strategy: 'facebook',
+  facebook_app_id: process.env.FACEBOOK_APP_ID,
+  facebook_app_secret: process.env.FACEBOOK_APP_SECRET
 }));
 app.listen(3000);
 </code></pre>
@@ -107,23 +110,22 @@ DELETE /posts/123
 <h3>
 <a name="how-to-create-a-twitter-clone-in-15-minutes" class="anchor" href="#how-to-create-a-twitter-clone-in-15-minutes"><span class="octicon octicon-link"></span></a>How to create a Twitter clone in 15 minutes</h3>
 
-<p>Screencast preview (double speed):</p>
+<p>Screencast preview (quadruple speed):</p>
 
-<p><img src="https://raw.github.com/dai-shi/social-cms-backend/gh-pages/ttyrecord.gif" alt="Preview loading..."></p>
+<p><img src="http://dai-shi.github.io/social-cms-backend/ttyrecord.gif" alt="Preview loading..."></p>
 
-<p><a href="http://dai-shi.github.io/social-cms-backend/ttyplay.html" target="_blank">Click here</a> to see a better one.</p>
+<p><a href="http://dai-shi.github.io/social-cms-backend/ttyplay.html" target="_blank">Controllable screencast at normal speed</a></p>
 
 <p>Notes:</p>
 
 <ul>
 <li>This is still a trial recording.</li>
-<li>The result isn't working yet (no authentication logic).</li>
 <li>I found a bug after this recording.</li>
 </ul><h2>
 <a name="todos" class="anchor" href="#todos"><span class="octicon octicon-link"></span></a>TODOs</h2>
 
 <ul>
-<li>Authentication: email(digest auth), facebook</li>
+<li>Authentication: email(digest auth)</li>
 <li>Notification: email, facebook</li>
 </ul>
       </section>
