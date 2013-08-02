@@ -1,7 +1,7 @@
 {
   "name": "social-cms-backend",
   "description": "Express middleware to provide schema-less REST APIs for creating a social networking website primarily using angular.js. It comes with built-in authentication, authorization and notification features.",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "author": "Daishi Kato <daishi@axlight.com>",
   "contributors": [
     "Shunsuke Watanabe <craftgear@gmail.com>"
