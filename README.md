@@ -56,16 +56,15 @@ Screencast
 
 ### How to create a Twitter clone in 15 minutes
 
-Screencast preview (double speed):
+Screencast preview (quadruple speed):
 
 ![Preview loading...](https://raw.github.com/dai-shi/social-cms-backend/gh-pages/ttyrecord.gif)
 
-<a href="http://dai-shi.github.io/social-cms-backend/ttyplay.html" target="_blank">Controllable screencast</a>
+<a href="http://dai-shi.github.io/social-cms-backend/ttyplay.html" target="_blank">Controllable screencast at normal speed</a>
 
 Notes:
 
 * This is still a trial recording.
-* The result isn't working yet (no authentication logic).
 * I found a bug after this recording.
 
 TODOs
