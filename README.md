@@ -58,18 +58,17 @@ Screencast
 
 Screencast preview (quadruple speed):
 
-![Preview loading...](http://dai-shi.github.io/social-cms-backend/ttyrecord.gif)
+![Preview](http://dai-shi.github.io/social-cms-backend/ttyrecord.gif)
 
 <a href="http://dai-shi.github.io/social-cms-backend/ttyplay.html" target="_blank">Controllable screencast at normal speed</a>
 
 Notes:
 
-* This is still a trial recording.
-* I found a bug after this recording.
+* This is still a trial recording. The result may include bugs.
 
 TODOs
 -----
 
 * Authentication: email(digest auth)
 * Notification: email, facebook
-
+* Realtime support (socket.io)
