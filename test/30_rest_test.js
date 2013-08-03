@@ -74,7 +74,11 @@ describe('initialize server', function() {
   it('should start the server', function(done) {
     var app = express();
     app.use(SCB.middleware({
-      mongodb_url: mongodb_url
+      mongodb_url: mongodb_url,
+      ensure_unique_index: {
+        object_type: 'like',
+        object_fields: ['owner', 'post_id']
+      }
     }));
     server = app.listen(port);
     //wait a while for the mongodb connection to be ready
@@ -536,6 +540,44 @@ describe('user creation test', function() {
       }
     }, function(error, response) {
       assert.equal(response.statusCode, 500);
+      done();
+    });
+  });
+
+});
+
+describe('basic like test', function() {
+  it('should like a post', function(done) {
+    request.post('http://localhost:' + port + '/likes', {
+      json: {
+        post_id: base_post_id
+      }
+    }, function(error, response) {
+      assert.equal(response.statusCode, 200, response.body);
+      assert.ok(response.body._id);
+      done();
+    });
+  });
+
+  it('should fail to like the same post', function(done) {
+    request.post('http://localhost:' + port + '/likes', {
+      json: {
+        post_id: base_post_id
+      }
+    }, function(error, response) {
+      assert.equal(response.statusCode, 500, response.body);
+      done();
+    });
+  });
+
+  it('should like another post', function(done) {
+    request.post('http://localhost:' + port + '/likes', {
+      json: {
+        post_id: base_post_id + 1
+      }
+    }, function(error, response) {
+      assert.equal(response.statusCode, 200, response.body);
+      assert.ok(response.body._id);
       done();
     });
   });
