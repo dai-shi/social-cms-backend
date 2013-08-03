@@ -123,6 +123,8 @@ describe('form login test', function() {
 
 });
 
+var base_post_id;
+
 describe('create post test', function() {
   it('should post a new post', function(done) {
     request.post('http://localhost:' + port + '/posts', {
@@ -131,7 +133,8 @@ describe('create post test', function() {
       }
     }, function(error, response) {
       assert.equal(response.statusCode, 200, response.body);
-      assert.equal(response.body._id, 1);
+      assert.ok(response.body._id);
+      base_post_id = response.body._id;
       done();
     });
   });
@@ -195,7 +198,7 @@ describe('create post test', function() {
       }
     }, function(error, response) {
       assert.equal(response.statusCode, 200, response.body);
-      assert.equal(response.body._id, 2);
+      assert.equal(response.body._id, base_post_id + 1);
       done();
     });
   });
@@ -239,7 +242,7 @@ describe('create post test', function() {
       }
     }, function(error, response) {
       assert.equal(response.statusCode, 200, response.body);
-      assert.equal(response.body._id, 3);
+      assert.equal(response.body._id, base_post_id + 2);
       done();
     });
   });
@@ -269,7 +272,7 @@ describe('create post test', function() {
       }
     }, function(error, response) {
       assert.equal(response.statusCode, 200, response.body);
-      assert.equal(response.body._id, 4);
+      assert.equal(response.body._id, base_post_id + 3);
       done();
     });
   });
@@ -294,55 +297,55 @@ describe('create post test', function() {
 describe('get post test', function() {
   it('should get a post', function(done) {
     request.get({
-      url: 'http://localhost:' + port + '/posts/1',
+      url: 'http://localhost:' + port + '/posts/' + base_post_id,
       json: true
     }, function(error, response) {
       assert.equal(response.statusCode, 200, response.body);
       assert.equal(response.body.foo, 'bar');
-      assert.equal(response.body._id, 1);
+      assert.equal(response.body._id, base_post_id);
       done();
     });
   });
 
   it('should get a post', function(done) {
     request.get({
-      url: 'http://localhost:' + port + '/posts/2',
+      url: 'http://localhost:' + port + '/posts/' + (base_post_id + 1),
       json: true
     }, function(error, response) {
       assert.equal(response.statusCode, 200, response.body);
       assert.equal(response.body.foo, 'bar');
-      assert.equal(response.body._id, 2);
+      assert.equal(response.body._id, base_post_id + 1);
       done();
     });
   });
 
   it('should get a post', function(done) {
     request.get({
-      url: 'http://localhost:' + port + '/posts/3',
+      url: 'http://localhost:' + port + '/posts/' + (base_post_id + 2),
       json: true
     }, function(error, response) {
       assert.equal(response.statusCode, 200, response.body);
       assert.equal(response.body.foo, 'bar');
-      assert.equal(response.body._id, 3);
+      assert.equal(response.body._id, base_post_id + 2);
       done();
     });
   });
 
   it('should get a post', function(done) {
     request.get({
-      url: 'http://localhost:' + port + '/posts/4',
+      url: 'http://localhost:' + port + '/posts/' + (base_post_id + 3),
       json: true
     }, function(error, response) {
       assert.equal(response.statusCode, 200, response.body);
       assert.equal(response.body.foo, 'bar');
-      assert.equal(response.body._id, 4);
+      assert.equal(response.body._id, base_post_id + 3);
       done();
     });
   });
 
   it('should fail to get a post', function(done) {
     request.get({
-      url: 'http://localhost:' + port + '/posts/9',
+      url: 'http://localhost:' + port + '/posts/99999',
       json: true
     }, function(error, response) {
       assert.equal(response.statusCode, 404);
@@ -426,7 +429,7 @@ describe('delete post test', function() {
   it('should delete a post', function(done) {
     request({
       method: 'delete',
-      url: 'http://localhost:' + port + '/posts/1',
+      url: 'http://localhost:' + port + '/posts/' + base_post_id,
       json: true
     }, function(error, response) {
       assert.equal(response.statusCode, 200, response.body);
@@ -454,7 +457,7 @@ describe('delete post test', function() {
   it('should fail to delete a post', function(done) {
     request({
       method: 'delete',
-      url: 'http://localhost:' + port + '/posts/9',
+      url: 'http://localhost:' + port + '/posts/99999',
       json: true
     }, function(error, response) {
       assert.equal(response.statusCode, 500, response.body);
@@ -468,7 +471,7 @@ describe('update post test', function() {
   it('should update a post', function(done) {
     request({
       method: 'put',
-      url: 'http://localhost:' + port + '/posts/2',
+      url: 'http://localhost:' + port + '/posts/' + (base_post_id + 1),
       json: {
         $set: {
           foo: 'bar2',
@@ -484,7 +487,7 @@ describe('update post test', function() {
 
   it('should get the updated post', function(done) {
     request.get({
-      url: 'http://localhost:' + port + '/posts/2',
+      url: 'http://localhost:' + port + '/posts/' + (base_post_id + 1),
       json: true
     }, function(error, response) {
       assert.equal(response.statusCode, 200, response.body);
