@@ -39,7 +39,7 @@ The following is the example of the post object endpoints.
 
     GET /posts/inbox
 
-    GET /posts/count
+    GET /posts/count?query=...
 
     GET /posts/123
 
@@ -64,7 +64,8 @@ Screencast preview (quadruple speed):
 
 Notes:
 
-* This is still a trial recording. The result may include bugs.
+* There is a typo found after the recording.
+  `/javascript/main.js -> /javascripts/main.js`
 
 TODOs
 -----
