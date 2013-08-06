@@ -90,7 +90,7 @@ GET /posts?query=...
 
 GET /posts/inbox
 
-GET /posts/count
+GET /posts/count?query=...
 
 GET /posts/123
 
@@ -112,21 +112,29 @@ DELETE /posts/123
 
 <p>Screencast preview (quadruple speed):</p>
 
-<p><img src="http://dai-shi.github.io/social-cms-backend/ttyrecord.gif" alt="Preview loading..."></p>
+<p><img src="http://dai-shi.github.io/social-cms-backend/ttyrecord.gif" alt="Preview"></p>
 
 <p><a href="http://dai-shi.github.io/social-cms-backend/ttyplay.html" target="_blank">Controllable screencast at normal speed</a></p>
 
 <p>Notes:</p>
 
 <ul>
-<li>This is still a trial recording.</li>
-<li>I found a bug after this recording.</li>
+<li>There is a typo found after the recording.
+<code>/javascript/main.js -&gt; /javascripts/main.js</code>
+</li>
+<li>The resulting code is available
+<a href="https://github.com/dai-shi/twitter-clone-sample/tree/20130804_recorded">here</a>
+</li>
+<li>You can try the running web service of the code
+<a href="http://twitterclonesample-nodeangularapp.rhcloud.com/" target="_blank">here</a>
+</li>
 </ul><h2>
 <a name="todos" class="anchor" href="#todos"><span class="octicon octicon-link"></span></a>TODOs</h2>
 
 <ul>
 <li>Authentication: email(digest auth)</li>
 <li>Notification: email, facebook</li>
+<li>Realtime support (socket.io)</li>
 </ul>
       </section>
 
