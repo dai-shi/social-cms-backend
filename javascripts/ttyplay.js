@@ -20,8 +20,9 @@ var nextFrameTimeout;
 
 function nextFrame() {
   var now = (new Date()).getTime() / 1000;
+  now = time_diff + (now - time_diff) * speedFactor;
   var framesCounted = 0;
-  while (framesCounted < frameJumpMax && nextFrameIdx < tty_data.length && tty_data[nextFrameIdx].time + (time_diff - now) * speedFactor < 0) {
+  while (framesCounted < frameJumpMax && nextFrameIdx < tty_data.length && tty_data[nextFrameIdx].time + time_diff - now < 0) {
     var record = tty_data[nextFrameIdx++];
     vtview.parseData(record.data);
     framesCounted++;
@@ -29,7 +30,9 @@ function nextFrame() {
 
   vtview.draw();
 
-  if (nextFrameIdx < tty_data.length) nextFrameTimeout = setTimeout(nextFrame, (tty_data[0].time + (time_diff - (new Date()).getTime() / 1000) * speedFactor) * 1000 + accurateTimeInterval);
+  now = (new Date()).getTime() / 1000;
+  now = time_diff + (now - time_diff) * speedFactor;
+  if (nextFrameIdx < tty_data.length) nextFrameTimeout = setTimeout(nextFrame, (tty_data[0].time + time_diff - now) * 1000 + accurateTimeInterval);
 }
 
 function go() {
