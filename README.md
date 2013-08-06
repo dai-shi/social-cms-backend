@@ -68,8 +68,8 @@ Notes:
   `/javascript/main.js -> /javascripts/main.js`
 * The resulting code is available
   [here](https://github.com/dai-shi/twitter-clone-sample/tree/20130804_recorded)
-* You can try the running sample by the resulting code
-  [here](http://twitterclonesample-nodeangularapp.rhcloud.com/)
+* You can try the running web service of the code
+  <a href="http://twitterclonesample-nodeangularapp.rhcloud.com/" target="_blank">here</a>
 
 TODOs
 -----
