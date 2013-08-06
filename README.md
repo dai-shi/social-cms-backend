@@ -3,6 +3,19 @@ social-cms-backend
 
 Express middleware to provide schema-less REST APIs for creating a social networking website primarily using angular.js. It comes with built-in authentication, authorization and notification features.
 
+Motivation
+----------
+
+There exists several MVC framework libraries for node.js
+that are inspired by Rails.  But they might be a bit outdated,
+when it comes to angular.js, client-side MVW framework.
+I would like to propose a maybe new style of web programming,
+which is the combination of a domain-specific REST API library
+(ready to use, no coding required) and client-side coding.
+
+This project is to provide such a library for a web site
+like SNS/Twitter/Facebook in a closed/private environment.
+
 How to install
 --------------
 
@@ -33,9 +46,9 @@ By default, there are 4 objects:
 
 The following is the example of the post object endpoints.
 
-    POST /posts
+    POST /posts           (body: a JSON w/o system preserved keys)
 
-    GET /posts?query=...
+    GET /posts?query=...  (query: MongoDB query parameter stringified)
 
     GET /posts/inbox
 
@@ -43,7 +56,7 @@ The following is the example of the post object endpoints.
 
     GET /posts/123
 
-    PUT /posts/123
+    PUT /posts/123        (body: MongoDB update object)
 
     DELETE /posts/123
 
