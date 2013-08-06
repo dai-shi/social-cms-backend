@@ -7,7 +7,8 @@ var tty_data;
 var nextFrameIdx = 0;
 
 var accurateTimeInterval = 1000 / 60; // max 60fps
-var frameJumpMax = 20;
+var frameJumpMax = 60;
+var speedFactor = 1;
 
 var viewReady = false;
 var playReady = false;
@@ -20,7 +21,7 @@ var nextFrameTimeout;
 function nextFrame() {
   var now = (new Date()).getTime() / 1000;
   var framesCounted = 0;
-  while (framesCounted < frameJumpMax && nextFrameIdx < tty_data.length && tty_data[nextFrameIdx].time + time_diff - now < 0) {
+  while (framesCounted < frameJumpMax && nextFrameIdx < tty_data.length && tty_data[nextFrameIdx].time + (time_diff - now) * speedFactor < 0) {
     var record = tty_data[nextFrameIdx++];
     vtview.parseData(record.data);
     framesCounted++;
@@ -28,7 +29,7 @@ function nextFrame() {
 
   vtview.draw();
 
-  if (nextFrameIdx < tty_data.length) nextFrameTimeout = setTimeout(nextFrame, (tty_data[0].time + time_diff - (new Date()).getTime() / 1000) * 1000 + accurateTimeInterval);
+  if (nextFrameIdx < tty_data.length) nextFrameTimeout = setTimeout(nextFrame, (tty_data[0].time + (time_diff - (new Date()).getTime() / 1000) * speedFactor) * 1000 + accurateTimeInterval);
 }
 
 function go() {
@@ -110,6 +111,51 @@ setTimeout(function() {
       nextFrameTimeout = null;
     }
 
+    nextFrameIdx = initialState.nextFrameIdx;
+    vtview.thaw(initialState.vtview);
+    vtview.draw();
+    if (wasplaying) go();
+  }, false);
+  document.getElementById("doublespeed").addEventListener('click', function(evt) {
+    evt.preventDefault();
+    var wasplaying = false;
+    if (nextFrameTimeout) {
+      wasplaying = true;
+      clearTimeout(nextFrameTimeout);
+      nextFrameTimeout = null;
+    }
+
+    speedFactor = 2;
+    nextFrameIdx = initialState.nextFrameIdx;
+    vtview.thaw(initialState.vtview);
+    vtview.draw();
+    if (wasplaying) go();
+  }, false);
+  document.getElementById("triplespeed").addEventListener('click', function(evt) {
+    evt.preventDefault();
+    var wasplaying = false;
+    if (nextFrameTimeout) {
+      wasplaying = true;
+      clearTimeout(nextFrameTimeout);
+      nextFrameTimeout = null;
+    }
+
+    speedFactor = 3;
+    nextFrameIdx = initialState.nextFrameIdx;
+    vtview.thaw(initialState.vtview);
+    vtview.draw();
+    if (wasplaying) go();
+  }, false);
+  document.getElementById("normalspeed").addEventListener('click', function(evt) {
+    evt.preventDefault();
+    var wasplaying = false;
+    if (nextFrameTimeout) {
+      wasplaying = true;
+      clearTimeout(nextFrameTimeout);
+      nextFrameTimeout = null;
+    }
+
+    speedFactor = 1;
     nextFrameIdx = initialState.nextFrameIdx;
     vtview.thaw(initialState.vtview);
     vtview.draw();
