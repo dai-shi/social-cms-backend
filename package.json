@@ -19,8 +19,7 @@
     "express": "~3.2.6",
     "request": "~2.21.0",
     "mocha": "~1.11.0",
-    "nodemon": "~0.7.8",
-    "cheerio": "~0.12.1"
+    "nodemon": "~0.7.8"
   },
   "repository": {
     "type": "git",
@@ -35,7 +34,7 @@
   ],
   "main": "./lib/index.js",
   "scripts": {
-    "test": "./node_modules/.bin/mocha"
+    "test": "./node_modules/.bin/mocha -t 15000"
   },
   "license": "BSD",
   "engines": {
