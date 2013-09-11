@@ -127,6 +127,7 @@ describe('authorization with facebook', function() {
 
 describe('shutdown server', function() {
   it('should stop the server', function(done) {
+    if (!test_ready) return done();
     server.close();
     done();
   });
