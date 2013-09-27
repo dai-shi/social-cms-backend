@@ -376,7 +376,7 @@ describe('count post test', function() {
     });
   });
 
-  it('should fail to query posts', function(done) {
+  it('should count empty posts', function(done) {
     request.get({
       url: 'http://localhost:' + port + '/posts/count',
       json: true,
@@ -388,6 +388,28 @@ describe('count post test', function() {
     }, function(error, response) {
       assert.equal(response.statusCode, 200, response.body);
       assert.equal(response.body.count, 0);
+      done();
+    });
+  });
+
+  it('should count multiple posts', function(done) {
+    request.get({
+      url: 'http://localhost:' + port + '/posts/count',
+      json: true,
+      qs: {
+        query: JSON.stringify([{
+          foo: 'bar'
+        }, {
+          foo: 'xxx'
+        }])
+      }
+    }, function(error, response) {
+      assert.equal(response.statusCode, 200, response.body);
+      assert.deepEqual(response.body, [{
+        count: 4
+      }, {
+        count: 0
+      }]);
       done();
     });
   });
@@ -411,7 +433,7 @@ describe('query post test', function() {
     });
   });
 
-  it('should fail to query posts', function(done) {
+  it('should query empty posts', function(done) {
     request.get({
       url: 'http://localhost:' + port + '/posts',
       json: true,
@@ -423,6 +445,26 @@ describe('query post test', function() {
     }, function(error, response) {
       assert.equal(response.statusCode, 200, response.body);
       assert.equal(response.body.length, 0);
+      done();
+    });
+  });
+
+  it('should query multiple posts', function(done) {
+    request.get({
+      url: 'http://localhost:' + port + '/posts',
+      json: true,
+      qs: {
+        query: JSON.stringify([{
+          foo: 'bar'
+        }, {
+          foo: 'xxx'
+        }])
+      }
+    }, function(error, response) {
+      assert.equal(response.statusCode, 200, response.body);
+      assert.equal(response.body.length, 2);
+      assert.equal(response.body[0].length, 4);
+      assert.equal(response.body[1].length, 0);
       done();
     });
   });
