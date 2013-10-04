@@ -88,5 +88,5 @@ TODOs
 -----
 
 * Authentication: email(digest auth)
-* Notification: email, facebook
+* Notification: email
 * Realtime support (socket.io)
