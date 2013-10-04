@@ -50,6 +50,7 @@ describe('authorization with facebook', function() {
   var facebook_app_access_token;
   var facebook_login_url;
   var facebook_user_id;
+  var facebook_user_access_token;
   var my_user_id;
 
   it('should get facebook app access token', function(done) {
@@ -66,13 +67,14 @@ describe('authorization with facebook', function() {
   it('should get facebook test user account', function(done) {
     if (!test_ready) return done();
     request.get({
-      uri: 'https://graph.facebook.com/' + facebook_app_id + '/accounts/test-users?installed=true&name=scbtest&locale=en_US&permissions=&method=post&access_token=' + facebook_app_access_token,
+      uri: 'https://graph.facebook.com/' + facebook_app_id + '/accounts/test-users?installed=true&name=scbtest&locale=en_US&permissions=manage_notifications&method=post&access_token=' + facebook_app_access_token,
       json: true
     }, function(error, response) {
       assert.equal(response.statusCode, 200);
       assert.ok(response.body.login_url);
       facebook_login_url = response.body.login_url;
       facebook_user_id = response.body.id;
+      facebook_user_access_token = response.body.access_token;
       done();
     });
   });
@@ -112,13 +114,68 @@ describe('authorization with facebook', function() {
 
   it('should get current user object', function(done) {
     if (!test_ready) return done();
-    SCB.getCurrentUserObject({
+    SCB.authorization_manager.getCurrentUserObject({
       user: my_user_id
     }, function(err, user_object) {
       if (err) return done(err);
       assert.equal(user_object._id, my_user_id);
       assert.equal(user_object.fullname, 'scbtest');
       assert.equal(user_object.system.facebook_user_id, facebook_user_id);
+      done();
+    });
+  });
+
+  //application notification test
+
+  it('should post a new post w/ destination to myself', function(done) {
+    request.post('http://localhost:' + port + '/posts', {
+      json: {
+        content: 'test post',
+        message: 'new post!',
+        destination: [{
+          user_id: my_user_id
+        }]
+      }
+    }, function(error, response) {
+      assert.equal(response.statusCode, 200, response.body);
+      setTimeout(done, 1000);
+    });
+  });
+
+  it('should receive facebook notification', function(done) {
+    request.get({
+      uri: 'https://graph.facebook.com/' + facebook_user_id + '/notifications?access_token=' + facebook_user_access_token,
+      json: true
+    }, function(error, response) {
+      assert.equal(response.statusCode, 200, response.body);
+      assert.equal(response.body.data.length, 1);
+      assert.ok(response.body.data[0].title.indexOf('new post!') >= 0);
+      done();
+    });
+  });
+
+  it('should post a new post w/ destination to somebody', function(done) {
+    request.post('http://localhost:' + port + '/posts', {
+      json: {
+        content: 'test post2',
+        message: 'new post!2',
+        destination: [{
+          user_id: 999
+        }]
+      }
+    }, function(error, response) {
+      assert.equal(response.statusCode, 200, response.body);
+      setTimeout(done, 1000);
+    });
+  });
+
+  it('should receive facebook notification unchanged', function(done) {
+    request.get({
+      uri: 'https://graph.facebook.com/' + facebook_user_id + '/notifications?access_token=' + facebook_user_access_token,
+      json: true
+    }, function(error, response) {
+      assert.equal(response.statusCode, 200, response.body);
+      assert.equal(response.body.data.length, 1);
       done();
     });
   });
