@@ -296,7 +296,20 @@ describe('check inbox', function() {
   var socket_user002;
   var last_data_user002;
   it('should connect socket.io for user002', function(done) {
-    socket_user002 = socket_io_client('http://localhost:' + port + '/');
+    var cookie = request.get('http://localhost:' + port + '/').headers.cookie;
+    var myAgent = new http.Agent();
+    myAgent._addRequest = myAgent.addRequest;
+    myAgent.addRequest = function(req, host, portnum, localAddress) {
+      if (host == 'localhost' && portnum == port) {
+        var old = req._headers.cookie;
+        req._headers.cookie = cookie + (old ? '; ' + old : '');
+        req._headerNames['cookie'] = 'Cookie';
+      }
+      return myAgent._addRequest(req, host, portnum, localAddress);
+    };
+    socket_user002 = socket_io_client('http://localhost:' + port + '/', {
+      agent: myAgent
+    });
     socket_user002.on('connect', function() {
       socket_user002.on('new-post', function(data) {
         last_data_user002 = data;
