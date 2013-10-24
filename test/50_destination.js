@@ -1,6 +1,9 @@
 var assert = require('assert');
 var async = require('async');
+var http = require('http');
 var express = require('express');
+var socket_io = require('socket.io');
+var socket_io_client = require('socket.io-client');
 var request = require('request');
 var MongoClient = require('mongodb').MongoClient;
 var mongodb_url = process.env.MONGODB_URL || 'mongodb://localhost:27017/socialcmsdb_test';
@@ -24,7 +27,10 @@ describe('initialize server', function() {
     app.use(SCB.middleware({
       mongodb_url: mongodb_url
     }));
-    server = app.listen(port);
+    server = http.createServer(app);
+    var sio = socket_io(server);
+    sio.use(SCB.socket_io({}));
+    server.listen(port);
     //wait a while for the mongodb connection to be ready
     setTimeout(done, 300);
   });
@@ -283,6 +289,18 @@ describe('check inbox', function() {
     }, function(error, response) {
       assert.equal(response.statusCode, 200, response.body);
       assert.equal(response.body.length, 2);
+      done();
+    });
+  });
+
+  var socket_user002;
+  var last_data_user002;
+  it('should connect socket.io for user002', function(done) {
+    socket_user002 = socket_io_client('http://localhost:' + port + '/');
+    socket_user002.on('connect', function() {
+      socket_user002.on('new-post', function(data) {
+        last_data_user002 = data;
+      });
       done();
     });
   });
