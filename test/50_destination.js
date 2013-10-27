@@ -24,12 +24,13 @@ var server;
 describe('initialize server', function() {
   it('should start the server', function(done) {
     var app = express();
-    app.use(SCB.middleware({
+    var options = {
       mongodb_url: mongodb_url
-    }));
+    };
+    app.use(SCB.middleware(options));
     server = http.createServer(app);
     var sio = socket_io(server);
-    sio.use(SCB.socket_io({}));
+    sio.use(SCB.socket_io(options));
     server.listen(port);
     //wait a while for the mongodb connection to be ready
     setTimeout(done, 300);
@@ -293,8 +294,11 @@ describe('check inbox', function() {
     });
   });
 
+  //
+  // socket.io test
+  //
   var socket_user002;
-  var last_data_user002;
+  var last_data_user002 = null;
   it('should connect socket.io for user002', function(done) {
     var cookie = request.get('http://localhost:' + port + '/').headers.cookie;
     var myAgent = new http.Agent();
@@ -315,6 +319,24 @@ describe('check inbox', function() {
         last_data_user002 = data;
       });
       done();
+    });
+  });
+
+  it('should recieve push via socket.io for user002', function(done) {
+    request.post('http://localhost:' + port + '/posts', {
+      json: {
+        content: 'post005',
+        destination: [{
+          group_id: group_id_001
+        }]
+      }
+    }, function(error, response) {
+      assert.equal(response.statusCode, 200, response.body);
+      setTimeout(function() {
+        assert.ok(last_data_user002);
+        assert.equal(last_data_user002.content, 'post005');
+        done();
+      }, 100);
     });
   });
 
