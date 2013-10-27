@@ -89,4 +89,3 @@ TODOs
 
 * Authentication: email(digest auth)
 * Notification: email
-* Realtime support (socket.io)
