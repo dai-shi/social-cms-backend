@@ -49,7 +49,7 @@ With socket.io 1.0 (upcoming):
       facebook_app_secret: process.env.FACEBOOK_APP_SECRET
     };
     app.use(SCB.middleware(SCB_options));
-    server = http.createServer(app);
+    var server = http.createServer(app);
     var sio = socket_io(server);
     sio.use(SCB.socket_io(SCB_options));
     server.listen(3000);
