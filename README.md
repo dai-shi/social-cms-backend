@@ -35,6 +35,25 @@ How to use
     }));
     app.listen(3000);
 
+With socket.io:
+
+    var http = require('http');
+    var express = require('express');
+    var socket_io = require('socket.io');
+    var SCB = require('social-cms-backend');
+    var app = express();
+    var SCB_options = {
+      mongodb_url: 'mongodb://localhost:27017/socialcmsdb',
+      passport_strategy: 'facebook',
+      facebook_app_id: process.env.FACEBOOK_APP_ID,
+      facebook_app_secret: process.env.FACEBOOK_APP_SECRET
+    };
+    app.use(SCB.middleware(SCB_options));
+    server = http.createServer(app);
+    var sio = socket_io(server);
+    sio.use(SCB.socket_io(SCB_options));
+    server.listen(3000);
+
 REST APIs
 ---------
 
