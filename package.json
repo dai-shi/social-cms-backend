@@ -13,7 +13,8 @@
     "passport": "~0.1.17",
     "passport-local": "~0.1.6",
     "passport-facebook": "~0.1.5",
-    "fb": "~0.6.2"
+    "fb": "~0.6.2",
+    "passport-http": "~0.2.2"
   },
   "devDependencies": {
     "express": "~3.2.6",

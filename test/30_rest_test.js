@@ -548,10 +548,9 @@ describe('update post test', function() {
 
 describe('user creation test', function() {
   it('should create a new user', function(done) {
-    request.post('http://localhost:' + port + '/login/local', {
+    request.post('http://localhost:' + port + '/adduser/local', {
       json: true,
       form: {
-        mode: 'create',
         username: 'user001',
         password: 'password001'
       }
@@ -563,10 +562,8 @@ describe('user creation test', function() {
   });
 
   it('should fail to create a new user without username', function(done) {
-    request.post('http://localhost:' + port + '/login/local', {
-      form: {
-        mode: 'create'
-      }
+    request.post('http://localhost:' + port + '/adduser/local', {
+      form: {}
     }, function(error, response) {
       assert.equal(response.statusCode, 500);
       done();
@@ -574,9 +571,8 @@ describe('user creation test', function() {
   });
 
   it('should fail to create an existing use', function(done) {
-    request.post('http://localhost:' + port + '/login/local', {
+    request.post('http://localhost:' + port + '/adduser/local', {
       form: {
-        mode: 'create',
         username: 'dummyuser',
         password: 'password002'
       }

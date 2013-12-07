@@ -40,9 +40,8 @@ describe('user setup', function() {
       ['user005', 'pass005'],
       ['user006', 'pass006']
     ], function(item, done) {
-      request.post('http://localhost:' + port + '/login/local', {
+      request.post('http://localhost:' + port + '/adduser/local', {
         form: {
-          mode: 'create',
           username: item[0],
           password: item[1]
         }
