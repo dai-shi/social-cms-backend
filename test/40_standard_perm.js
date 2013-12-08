@@ -2,6 +2,9 @@ var assert = require('assert');
 var async = require('async');
 var express = require('express');
 var request = require('request');
+request = request.defaults({
+  jar: true
+});
 var MongoClient = require('mongodb').MongoClient;
 var mongodb_url = process.env.MONGODB_URL || 'mongodb://localhost:27017/socialcmsdb_test';
 var SCB = require('../lib/index.js');

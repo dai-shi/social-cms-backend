@@ -18,7 +18,7 @@
   },
   "devDependencies": {
     "express": "~3.2.6",
-    "request": "~2.21.0",
+    "request": "https://github.com/dai-shi/request/archive/d919bc1ce9.tar.gz",
     "mocha": "~1.11.0",
     "socket.io": "https://github.com/nkzawa/socket.io/archive/master.tar.gz",
     "socket.io-client": "https://github.com/nkzawa/socket.io-client/archive/master.tar.gz"

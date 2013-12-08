@@ -4,7 +4,8 @@ var request = require('request');
 request = request.defaults({
   headers: {
     'user-agent': 'Mozilla/5.0' //facebook wants this
-  }
+  },
+  jar: true
 });
 var MongoClient = require('mongodb').MongoClient;
 var mongodb_url = process.env.MONGODB_URL || 'mongodb://localhost:27017/socialcmsdb_test';

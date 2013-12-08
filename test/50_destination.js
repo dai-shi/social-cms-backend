@@ -5,6 +5,9 @@ var express = require('express');
 var socket_io = require('socket.io');
 var socket_io_client = require('socket.io-client');
 var request = require('request');
+request = request.defaults({
+  jar: true
+});
 var MongoClient = require('mongodb').MongoClient;
 var mongodb_url = process.env.MONGODB_URL || 'mongodb://localhost:27017/socialcmsdb_test';
 var SCB = require('../lib/index.js');
