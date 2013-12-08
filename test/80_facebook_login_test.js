@@ -128,6 +128,7 @@ describe('authorization with facebook', function() {
   //application notification test
 
   it('should post a new post w/ destination to myself', function(done) {
+    if (!test_ready) return done();
     request.post('http://localhost:' + port + '/posts', {
       json: {
         content: 'test post',
@@ -143,6 +144,7 @@ describe('authorization with facebook', function() {
   });
 
   it('should receive facebook notification', function(done) {
+    if (!test_ready) return done();
     request.get({
       uri: 'https://graph.facebook.com/' + facebook_user_id + '/notifications?access_token=' + facebook_user_access_token,
       json: true
@@ -155,6 +157,7 @@ describe('authorization with facebook', function() {
   });
 
   it('should post a new post w/ destination to somebody', function(done) {
+    if (!test_ready) return done();
     request.post('http://localhost:' + port + '/posts', {
       json: {
         content: 'test post2',
@@ -170,6 +173,7 @@ describe('authorization with facebook', function() {
   });
 
   it('should receive facebook notification unchanged', function(done) {
+    if (!test_ready) return done();
     request.get({
       uri: 'https://graph.facebook.com/' + facebook_user_id + '/notifications?access_token=' + facebook_user_access_token,
       json: true
