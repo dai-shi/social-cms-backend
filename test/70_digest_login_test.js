@@ -3,7 +3,7 @@ var crypto = require('crypto');
 var express = require('express');
 var request = require('request');
 request = request.defaults({
-  jar: true
+  jar: false
 });
 var MongoClient = require('mongodb').MongoClient;
 var mongodb_url = process.env.MONGODB_URL || 'mongodb://localhost:27017/socialcmsdb_test';
@@ -31,6 +31,13 @@ describe('initialize server', function() {
         realm: 'digest_test_realm'
       }
     }));
+    app.get('/check', function(req, res) {
+      if (req.isAuthenticated()) {
+        res.send('authenticated');
+      } else {
+        res.send('anonymous');
+      }
+    });
     server = app.listen(port);
     //wait a while for the mongodb connection to be ready
     setTimeout(done, 300);
@@ -96,9 +103,11 @@ describe('adduser test for digest', function() {
     });
   });
 
+  var jar001 = request.jar();
   it('should login as a user', function(done) {
     request.get('http://localhost:' + port + '/login/digest', {
       json: true,
+      jar: jar001,
       auth: {
         user: 'user001',
         pass: 'pass001',
@@ -111,6 +120,18 @@ describe('adduser test for digest', function() {
     });
   });
 
+  it('should login with remember_me cookie', function(done) {
+    jar001.setCookie('connect.sid=REMOVED', 'http://localhost', function(err) {
+      assert.ifError(err);
+      request.get('http://localhost:' + port + '/check', {
+        jar: jar001
+      }, function(error, response) {
+        assert.equal(response.statusCode, 200, response.body);
+        assert.equal(response.body, 'authenticated');
+        done();
+      });
+    });
+  });
 
 });
 
