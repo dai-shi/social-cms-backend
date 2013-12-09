@@ -54,6 +54,16 @@ With socket.io 1.0 (upcoming):
     sio.use(SCB.socket_io(SCB_options));
     server.listen(3000);
 
+With HTTP DIGEST strategy:
+
+    var SCB_options = {
+      mongodb_url: 'mongodb://localhost:27017/socialcmsdb',
+      passport_strategy: 'digest',
+      auth_digest: {
+        realm: 'my_realm'
+      }
+    };
+
 REST APIs
 ---------
 
@@ -106,5 +116,4 @@ Notes:
 TODOs
 -----
 
-* Authentication: email(digest auth)
 * Notification: email
