@@ -36,7 +36,7 @@
   ],
   "main": "./lib/index.js",
   "scripts": {
-    "test": "./node_modules/.bin/mocha -t 15000"
+    "test": "NODE_ENV=test ./node_modules/.bin/mocha -t 15000"
   },
   "license": "BSD",
   "engines": {
