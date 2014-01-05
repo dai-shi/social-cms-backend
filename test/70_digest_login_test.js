@@ -120,6 +120,18 @@ describe('adduser test for digest', function() {
     });
   });
 
+  it('should get user info', function(done) {
+    request.get('http://localhost:' + port + '/users/' + user001_id, {
+      json: true,
+      jar: jar001
+    }, function(error, response) {
+      assert.equal(response.statusCode, 200, response.body);
+      assert.equal(response.body._id, user001_id);
+      assert.ok(!response.body.system);
+      done();
+    });
+  });
+
   it('should login with remember_me cookie', function(done) {
     jar001.setCookie('connect.sid=REMOVED', 'http://localhost', function(err) {
       assert.ifError(err);
