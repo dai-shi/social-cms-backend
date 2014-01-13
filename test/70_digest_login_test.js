@@ -144,6 +144,82 @@ describe('adduser test for digest', function() {
       });
     });
   });
+});
+
+describe('moduser test for digest', function() {
+  it('should fail to modify a user', function(done) {
+    request.post('http://localhost:' + port + '/moduser/digest', {
+      json: true,
+      form: {
+        username: 'user001',
+        passhash: md5('user001:digest_test_realm:pass001mod')
+      }
+    }, function(error, response) {
+      assert.equal(response.statusCode, 500);
+      done();
+    });
+  });
+
+  var jar002 = request.jar();
+  it('should login as a user', function(done) {
+    request.get('http://localhost:' + port + '/login/digest', {
+      json: true,
+      jar: jar002,
+      auth: {
+        user: 'user001',
+        pass: 'pass001',
+        sendImmediately: false
+      }
+    }, function(error, response) {
+      assert.equal(response.statusCode, 200, response.body);
+      assert.equal(response.body.user_id, user001_id);
+      done();
+    });
+  });
+
+  it('should to modify a user', function(done) {
+    request.post('http://localhost:' + port + '/moduser/digest', {
+      json: true,
+      jar: jar002,
+      form: {
+        username: 'user001',
+        passhash: md5('user001:digest_test_realm:pass001mod')
+      }
+    }, function(error, response) {
+      assert.equal(response.statusCode, 200, response.body);
+      assert.equal(response.body.user_id, user001_id);
+      done();
+    });
+  });
+
+  it('should fail to login with old password', function(done) {
+    request.get('http://localhost:' + port + '/login/digest', {
+      json: true,
+      auth: {
+        user: 'user001',
+        pass: 'pass001',
+        sendImmediately: false
+      }
+    }, function(error, response) {
+      assert.equal(response.statusCode, 401);
+      done();
+    });
+  });
+
+  it('should login with new password', function(done) {
+    request.get('http://localhost:' + port + '/login/digest', {
+      json: true,
+      auth: {
+        user: 'user001',
+        pass: 'pass001mod',
+        sendImmediately: false
+      }
+    }, function(error, response) {
+      assert.equal(response.statusCode, 200, response.body);
+      assert.equal(response.body.user_id, user001_id);
+      done();
+    });
+  });
 
 });
 
