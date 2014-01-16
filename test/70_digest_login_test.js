@@ -223,6 +223,58 @@ describe('moduser test for digest', function() {
 
 });
 
+var user002_id;
+
+describe('adduser with initdata', function() {
+
+  it('should create a user', function(done) {
+    request.post('http://localhost:' + port + '/adduser/digest', {
+      json: true,
+      form: {
+        username: 'user002',
+        passhash: md5('user002:digest_test_realm:pass002'),
+        initdata: JSON.stringify({
+          extra: 'extradata'
+        })
+      }
+    }, function(error, response) {
+      assert.equal(response.statusCode, 200);
+      assert.ok(response.body.user_id);
+      user002_id = response.body.user_id;
+      done();
+    });
+  });
+
+  var jar002 = request.jar();
+  it('should login as a user', function(done) {
+    request.get('http://localhost:' + port + '/login/digest', {
+      json: true,
+      jar: jar002,
+      auth: {
+        user: 'user002',
+        pass: 'pass002',
+        sendImmediately: false
+      }
+    }, function(error, response) {
+      assert.equal(response.statusCode, 200, response.body);
+      assert.equal(response.body.user_id, user002_id);
+      done();
+    });
+  });
+
+  it('should get user info', function(done) {
+    request.get('http://localhost:' + port + '/users/' + user002_id, {
+      json: true,
+      jar: jar002
+    }, function(error, response) {
+      assert.equal(response.statusCode, 200, response.body);
+      assert.equal(response.body._id, user002_id);
+      assert.equal(response.body.extra, 'extradata');
+      done();
+    });
+  });
+});
+
 describe('shutdown server', function() {
   it('should stop the server', function(done) {
     server.close();
