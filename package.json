@@ -14,14 +14,16 @@
     "passport-local": "~0.1.6",
     "passport-facebook": "~0.1.5",
     "fb": "~0.6.2",
-    "passport-http": "~0.2.2"
+    "passport-http": "~0.2.2",
+    "breeze-mongodb": "0.0.6"
   },
   "devDependencies": {
     "express": "~3.2.6",
-    "request": "https://github.com/dai-shi/request/archive/d919bc1ce9.tar.gz",
+    "request": "https://github.com/mikeal/request/archive/882b01bae5.tar.gz",
     "mocha": "~1.11.0",
     "socket.io": "https://github.com/nkzawa/socket.io/archive/master.tar.gz",
-    "socket.io-client": "https://github.com/nkzawa/socket.io-client/archive/master.tar.gz"
+    "socket.io-client": "https://github.com/nkzawa/socket.io-client/archive/master.tar.gz",
+    "jsdom": "https://github.com/dai-shi/jsdom/archive/343182444b.tar.gz"
   },
   "repository": {
     "type": "git",
