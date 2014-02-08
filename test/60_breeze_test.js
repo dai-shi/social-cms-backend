@@ -123,6 +123,27 @@ describe('basic', function() {
     });
   });
 
+  it('test03', function(done) {
+    var scripts = ['libs/jquery-2.0.2.js', 'libs/q.js', 'libs/breeze.debug.js', 'libs/breeze.dataservice.mongo.js', 'test.js', 'test03.js'].map(function(x) {
+      return 'http://localhost:' + port + '/' + x;
+    });
+    jar001.getCookieString('http://localhost:' + port, function(err, cookieStr) {
+      jsdom.env('http://localhost:' + port + '/test.html', scripts, {
+        jar: jar001,
+        document: {
+          cookie: cookieStr,
+          cookieDomain: 'localhost'
+        }
+      }, function(errors, window) {
+        assert.ifError(errors);
+        setTimeout(function() {
+          assert.equal(window.document.getElementById('result').innerHTML, 'ok1ok2');
+          done();
+        }, 500);
+      });
+    });
+  });
+
 });
 
 
