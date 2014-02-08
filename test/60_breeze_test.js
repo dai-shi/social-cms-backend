@@ -46,10 +46,10 @@ describe('initialize server', function() {
       breeze_mongo: true,
       routes: [{
         object_type: 'user',
-        object_prefix: '/breeze-service/user'
+        object_prefix: '/breeze-service/users'
       }, {
         object_type: 'post',
-        object_prefix: '/breeze-service/post'
+        object_prefix: '/breeze-service/posts'
       }, {
         object_prefix: '/breeze-service/SaveChanges'
       }]
