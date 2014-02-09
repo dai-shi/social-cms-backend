@@ -28,7 +28,10 @@ describe('initialize server', function() {
   it('should start the server', function(done) {
     var app = express();
     var options = {
-      mongodb_url: mongodb_url
+      mongodb_url: mongodb_url,
+      session_middleware: express.session({
+        secret: 'dummy secret'
+      })
     };
     app.use(SCB.middleware(options));
     server = http.createServer(app);
