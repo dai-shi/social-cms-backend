@@ -64,6 +64,22 @@ With HTTP DIGEST strategy:
       }
     };
 
+With BreezeJS support:
+
+    var SCB_options = {
+      mongodb_url: 'mongodb://localhost:27017/socialcmsdb',
+      breeze_mongo: true,
+      routes: [{
+        object_type: 'user',
+        object_prefix: '/breeze-service/users'
+      }, {
+        object_type: 'post',
+        object_prefix: '/breeze-service/posts'
+      }, {
+        object_prefix: '/breeze-service/SaveChanges'
+      }]
+    };
+
 REST APIs
 ---------
 
