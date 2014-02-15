@@ -147,8 +147,18 @@ describe('basic', function() {
 });
 
 
+describe('no login', function() {
+  it('should fail to get user/myself', function(done) {
+    request.get('http://localhost:' + port + '/breeze-service/users/myself', {
+      json: true
+    }, function(error, response) {
+      assert.equal(response.statusCode, 200, response.body);
+      assert.equal(response.body.length, 0);
+      done();
+    });
+  });
 
-
+});
 
 
 describe('shutdown server', function() {
