@@ -85,6 +85,54 @@ app.use(SCB.middleware({
 app.listen(3000);
 </code></pre>
 
+<p>With socket.io 1.0 (upcoming):</p>
+
+<pre><code>var http = require('http');
+var express = require('express');
+var socket_io = require('socket.io');
+var SCB = require('social-cms-backend');
+var app = express();
+var SCB_options = {
+  mongodb_url: 'mongodb://localhost:27017/socialcmsdb',
+  passport_strategy: 'facebook',
+  facebook_app_id: process.env.FACEBOOK_APP_ID,
+  facebook_app_secret: process.env.FACEBOOK_APP_SECRET
+};
+app.use(SCB.middleware(SCB_options));
+var server = http.createServer(app);
+var sio = socket_io(server);
+sio.use(SCB.socket_io(SCB_options));
+server.listen(3000);
+</code></pre>
+
+<p>With HTTP DIGEST strategy:</p>
+
+<pre><code>var SCB_options = {
+  mongodb_url: 'mongodb://localhost:27017/socialcmsdb',
+  passport_strategy: 'digest',
+  auth_digest: {
+    realm: 'my_realm'
+  }
+};
+</code></pre>
+
+<p>With BreezeJS support:</p>
+
+<pre><code>var SCB_options = {
+  mongodb_url: 'mongodb://localhost:27017/socialcmsdb',
+  breeze_mongo: true,
+  routes: [{
+    object_type: 'user',
+    object_prefix: '/breeze-service/users'
+  }, {
+    object_type: 'post',
+    object_prefix: '/breeze-service/posts'
+  }, {
+    object_prefix: '/breeze-service/SaveChanges'
+  }]
+};
+</code></pre>
+
 <h2>
 <a name="rest-apis" class="anchor" href="#rest-apis"><span class="octicon octicon-link"></span></a>REST APIs</h2>
 
@@ -107,7 +155,7 @@ GET /posts/count?query=...
 
 GET /posts/123
 
-PUT /posts/123        (body: MongoDB update object)
+PUT /posts/123        (body: MongoDB update object, using update operators)
 
 DELETE /posts/123
 </code></pre>
@@ -145,9 +193,7 @@ DELETE /posts/123
 <a name="todos" class="anchor" href="#todos"><span class="octicon octicon-link"></span></a>TODOs</h2>
 
 <ul>
-<li>Authentication: email(digest auth)</li>
-<li>Notification: email, facebook</li>
-<li>Realtime support (socket.io)</li>
+<li>Notification: email</li>
 </ul>
       </section>
 
