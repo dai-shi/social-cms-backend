@@ -474,6 +474,34 @@ describe('query post test', function() {
 
 });
 
+describe('aggregate post test', function() {
+  it('should count posts by aggregate', function(done) {
+    request.get({
+      url: 'http://localhost:' + port + '/posts/aggregate',
+      json: true,
+      qs: {
+        pipeline: JSON.stringify([{
+          $match: {
+            foo: 'bar'
+          }
+        }, {
+          $group: {
+            _id: 'all',
+            count: {
+              $sum: 1
+            }
+          }
+        }])
+      }
+    }, function(error, response) {
+      assert.equal(response.statusCode, 200, response.body);
+      assert.equal(response.body[0].count, 4);
+      done();
+    });
+  });
+
+});
+
 describe('delete post test', function() {
   it('should delete a post', function(done) {
     request({
