@@ -15,7 +15,10 @@
     "passport-facebook": "~0.1.5",
     "fb": "~0.6.2",
     "passport-http": "~0.2.2",
-    "breeze-mongodb": "0.0.6"
+    "breeze-mongodb": "0.0.6",
+    "body-parser": "~1.0.2",
+    "cookie-parser": "~1.0.1",
+    "express-session": "~1.0.2"
   },
   "devDependencies": {
     "express": "~3.2.6",
