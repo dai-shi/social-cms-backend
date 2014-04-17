@@ -29,7 +29,7 @@ describe('initialize server', function() {
     var app = express();
     var options = {
       mongodb_url: mongodb_url,
-      session_middleware: express.session({
+      session_middleware: require('express-session')({
         secret: 'dummy secret'
       })
     };

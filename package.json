@@ -21,7 +21,7 @@
     "express-session": "~1.0.2"
   },
   "devDependencies": {
-    "express": "~3.2.6",
+    "express": "~4.0.0",
     "request": "https://github.com/mikeal/request/archive/882b01bae5.tar.gz",
     "mocha": "~1.11.0",
     "socket.io": "https://github.com/nkzawa/socket.io/archive/master.tar.gz",
