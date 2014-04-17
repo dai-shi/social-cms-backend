@@ -49,7 +49,8 @@ describe('initialize server', function() {
 
 describe('authorization with facebook', function() {
   var facebook_app_access_token;
-  var facebook_login_url;
+  var facebook_user_email;
+  var facebook_user_password;
   var facebook_user_id;
   var facebook_user_access_token;
   var my_user_id;
@@ -72,8 +73,9 @@ describe('authorization with facebook', function() {
       json: true
     }, function(error, response) {
       assert.equal(response.statusCode, 200);
-      assert.ok(response.body.login_url);
-      facebook_login_url = response.body.login_url;
+      assert.ok(response.body.email);
+      facebook_user_email = response.body.email;
+      facebook_user_password = response.body.password;
       facebook_user_id = response.body.id;
       facebook_user_access_token = response.body.access_token;
       done();
@@ -83,7 +85,13 @@ describe('authorization with facebook', function() {
   it('should login facebook', function(done) {
     if (!test_ready) return done();
     request.get('https://www.facebook.com', function() {
-      request.get(facebook_login_url, function(error, response) {
+      request.post('https://www.facebook.com/login.php', {
+        followAllRedirects: true,
+        form: {
+          email: facebook_user_email,
+          pass: facebook_user_password
+        }
+      }, function(error, response) {
         assert.equal(response.statusCode, 200, response.body);
         assert.ok(response.body.indexOf('scbtest') >= 0);
         done();
