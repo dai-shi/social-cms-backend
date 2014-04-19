@@ -99,6 +99,8 @@ The following is the example of the post object endpoints.
 
     GET /posts/count?query=...
 
+    GET /posts/aggregate?pipeline=...
+
     GET /posts/123
 
     PUT /posts/123        (body: MongoDB update object, using update operators)
