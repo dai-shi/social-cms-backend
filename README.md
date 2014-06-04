@@ -35,7 +35,7 @@ How to use
     }));
     app.listen(3000);
 
-With socket.io 1.0 (upcoming):
+With socket.io v1.0
 
     var http = require('http');
     var express = require('express');
