@@ -1,0 +1,143 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>slides</title>
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/reveal.js/2.6.2/css/reveal.min.css" />
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/reveal.js/2.6.2/css/theme/default.css" id="theme" />
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/reveal.js/2.6.2/lib/css/zenburn.css" />
+</head>
+<body>
+<div class="reveal">
+  <div class="slides">
+    <section data-markdown data-separator="^\n\n\n" data-vertical="^\n\n" data-notes="^Note:">
+      <script type="text/template">
+## social-cms-backendの話
+@dai_shi
+
+
+
+## 自己紹介
+- @dai_shi
+  - ↑ブログ更新のお知らせがメイン
+- https://github.com/dai-shi
+  - ↑そろそろ何か新しいの作りたい
+- サラリーマン
+
+
+
+## node.jsとの出会い
+- Sinatra/Rubyを使っていたときにsocket.ioを使おうと思ったが、node.jsのがお手軽らしいと
+- JavaScript(ES5)は好き、DOMは嫌いだけど
+- npmすごい、玉石混淆だけど
+- それまでマイナー路線(Scheme)だったので大きなコミュニティにあこがれて
+
+
+
+## npmパッケージを自分でも何か作ってみよう
+- 最初に作ったcontinuation.jsはマニアックすぎたので
+- もう少し一般受けしそうなものを...
+- というわけでsocial-cms-backend
+- Expressのmiddlewareとして動くライブラリ
+- closed SNSを作るためのライブラリ、自分で使うため
+
+
+
+## SPA時代のbackendライブラリは?
+- Single Page Application
+- frontendはBackbone.jsやAngularJSなどで自由に
+- backendはJSON APIのみを提供する
+
+
+
+## 作った
+- Express + MongoDB + Passport
+- これらをできるだけ直感的につなげる
+  - 認証に加えてグループ管理、アクセス制御なども
+- node.jsのサーバ側のコーディングは最小限に
+- JSONのメッセージングフォーマットに少し規約
+
+
+
+## 例えば
+```
+POST /posts HTTP/1.0
+Content-Type: application/json
+
+{"category":"foo","message":"hogehoge","scope":{"group_id":1234}}
+```
+```
+GET /posts?query=%7B%22category%22%3A%22foo%22%7D HTTP/1.0
+```
+
+
+
+## Twitterクローン作ってみた
+- 15分でコーディングするスクリーンキャスト
+![Preview](http://dai-shi.github.io/social-cms-backend/ttyrecord.gif)
+(4倍速プレビュー)
+- ちゃんと見る→ http://dai-shi.github.io/social-cms-backend/ttyplay.html
+
+
+
+## ちゃんと動いている
+- 機能はシンプル、Facebookアカウントでログイン
+<img style="height: 10em" src="http://dai-shi.github.io/social-cms-backend/twitter-clone-sample.png" />
+- 試してみる→ http://twitterclonesample-nodeangularapp.rhcloud.com/ OpenShiftを利用
+
+
+
+## DailyJSにリークしてみた
+- AngularJS好きには受けるようだ
+  - すごいのはあっち
+- 使われた報告はない
+- ドキュメント不足は課題かも
+
+
+
+## Socket.IO v1.0を利用
+- フォローしたら通知する機能を実現するため
+- フォロワーにはsocket.io経由でPUSHする
+- 追加コーディングは特になく規約通りにすればPUSHされる
+- サーバ側のコードをシンプルにするためにmiddlewareとして実装
+
+
+
+## 興味があれば、ぜひ!
+- スクリーンキャストを見てみてください
+- 動作しているTwitterクローンを見てみてください
+- 本体も見てみてください
+- ...使ってみたい人がいたらドキュメントも書くかも
+
+
+
+## おしまい
+<div style="font-size: 60%; margin-top: 20em;">この作品は [クリエイティブ・コモンズ 表示 - 非営利 - 改変禁止 2.1 日本 ライセンス](http://creativecommons.org/licenses/by-nc-nd/2.1/jp/) の下に提供されています。</div>
+    </script>
+  </div>
+</div>
+
+<script src="//cdn.jsdelivr.net/reveal.js/2.6.2/lib/js/head.min.js"></script>
+<script src="//cdn.jsdelivr.net/reveal.js/2.6.2/js/reveal.min.js"></script>
+<script>
+  Reveal.initialize({
+    controls: false,
+    theme: 'blood',
+    transition: 'default',
+    dependencies: [
+      { src: '//cdn.jsdelivr.net/reveal.js/2.6.2/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+      { src: '//cdn.jsdelivr.net/reveal.js/2.6.2/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: '//cdn.jsdelivr.net/reveal.js/2.6.2/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: '//cdn.jsdelivr.net/reveal.js/2.6.2/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+      { src: '//cdn.jsdelivr.net/reveal.js/2.6.2/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+      { src: '//cdn.jsdelivr.net/reveal.js/2.6.2/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+    ]
+  });
+</script>
+
+<div style="display: block; position: absolute; bottom: 10px; right: 10px; z-index: 20;">
+  <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/2.1/jp/"><img alt="クリエイティブ・コモンズ・ライセンス" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-nd/2.1/jp/88x31.png" /></a>
+</div>
+
+</body>
+</html>
