@@ -136,6 +136,7 @@ describe('authorization with facebook', function() {
 
   //application notification test
 
+  /* notification api no longer supported from web site
   it('should post a new post w/ destination to myself', function(done) {
     if (!test_ready) return done();
     request.post('http://localhost:' + port + '/posts', {
@@ -164,6 +165,7 @@ describe('authorization with facebook', function() {
       done();
     });
   });
+  */
 
   it('should post a new post w/ destination to somebody', function(done) {
     if (!test_ready) return done();
