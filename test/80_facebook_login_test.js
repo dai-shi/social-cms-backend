@@ -109,16 +109,14 @@ describe('authorization with facebook', function() {
 
   it('should set facebook fullname', function(done) {
     if (!test_ready) return done();
-    setTimeout(function() {
-      request.get('http://localhost:' + port + '/users/myself', {
-        json: true
-      }, function(error, response) {
-        assert.equal(response.statusCode, 200, response.body);
-        assert.equal(response.body.fullname, 'scbtest');
-        my_user_id = response.body._id;
-        done();
-      });
-    }, 300); //wait a little bit to finish setting fullname
+    request.get('http://localhost:' + port + '/users/myself', {
+      json: true
+    }, function(error, response) {
+      assert.equal(response.statusCode, 200, response.body);
+      assert.equal(response.body.fullname, 'scbtest');
+      my_user_id = response.body._id;
+      done();
+    });
   });
 
   it('should get current user object', function(done) {
