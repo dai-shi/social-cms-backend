@@ -1,3 +1,9 @@
+/* jshint undef: true, unused: true, latedef: true */
+/* jshint quotmark: single, eqeqeq: true */
+/* jshint node: true */
+
+/* global describe, it */
+
 var assert = require('assert');
 var async = require('async');
 var http = require('http');
@@ -9,7 +15,7 @@ request = request.defaults({
   jar: true
 });
 var MongoClient = require('mongodb').MongoClient;
-var mongodb_url = process.env.MONGODB_URL || 'mongodb://localhost:27017/socialcmsdb_test';
+var mongodb_url = process.env.TEST_MONGODB_URL || 'mongodb://localhost:27017/socialcmsdb_test';
 var SCB = require('../lib/index.js');
 var port = process.env.PORT || 27891;
 
@@ -309,10 +315,10 @@ describe('check inbox', function() {
     var myAgent = new http.Agent();
     myAgent._addRequest = myAgent.addRequest;
     myAgent.addRequest = function(req, host, portnum, localAddress) {
-      if (host == 'localhost' && portnum == port) {
+      if (host === 'localhost' && portnum === port) {
         var old = req._headers.cookie;
         req._headers.cookie = cookie + (old ? '; ' + old : '');
-        req._headerNames['cookie'] = 'Cookie';
+        req._headerNames.cookie = 'Cookie';
       }
       return myAgent._addRequest(req, host, portnum, localAddress);
     };

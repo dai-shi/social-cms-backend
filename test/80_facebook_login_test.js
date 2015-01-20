@@ -1,3 +1,9 @@
+/* jshint undef: true, unused: true, latedef: true */
+/* jshint quotmark: single, eqeqeq: true */
+/* jshint node: true */
+
+/* global describe, it */
+
 var assert = require('assert');
 var express = require('express');
 var request = require('request');
@@ -8,7 +14,7 @@ request = request.defaults({
   jar: true
 });
 var MongoClient = require('mongodb').MongoClient;
-var mongodb_url = process.env.MONGODB_URL || 'mongodb://localhost:27017/socialcmsdb_test';
+var mongodb_url = process.env.TEST_MONGODB_URL || 'mongodb://localhost:27017/socialcmsdb_test';
 var facebook_app_id = process.env.FACEBOOK_APP_ID;
 var facebook_app_secret = process.env.FACEBOOK_APP_SECRET;
 var test_ready = facebook_app_id && facebook_app_secret && true;

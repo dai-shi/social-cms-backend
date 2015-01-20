@@ -1,3 +1,9 @@
+/* jshint undef: true, unused: true, latedef: true */
+/* jshint quotmark: single, eqeqeq: true */
+/* jshint node: true */
+
+/* global describe, it */
+
 var assert = require('assert');
 var async = require('async');
 var express = require('express');
@@ -6,7 +12,7 @@ request = request.defaults({
   jar: true
 });
 var MongoClient = require('mongodb').MongoClient;
-var mongodb_url = process.env.MONGODB_URL || 'mongodb://localhost:27017/socialcmsdb_test';
+var mongodb_url = process.env.TEST_MONGODB_URL || 'mongodb://localhost:27017/socialcmsdb_test';
 var SCB = require('../lib/index.js');
 var port = process.env.PORT || 27891;
 
@@ -115,7 +121,7 @@ describe('user ownership', function() {
         content: 'post001-003'
       }
     }, function(error, response) {
-      assert.equal(response.statusCode, 500, response.body);
+      assert.equal(response.statusCode, 403, response.body);
       done();
     });
   });
@@ -131,7 +137,7 @@ describe('user ownership', function() {
         content: 'post001-004'
       }
     }, function(error, response) {
-      assert.equal(response.statusCode, 500, response.body);
+      assert.equal(response.statusCode, 403, response.body);
       done();
     });
   });
@@ -228,7 +234,7 @@ describe('user ownership', function() {
         }
       }
     }, function(error, response) {
-      assert.equal(response.statusCode, 500, response.body);
+      assert.equal(response.statusCode, 403, response.body);
       done();
     });
   });

@@ -1,3 +1,9 @@
+/* jshint undef: true, unused: true, latedef: true */
+/* jshint quotmark: single, eqeqeq: true */
+/* jshint node: true */
+
+/* global describe, it */
+
 var assert = require('assert');
 var express = require('express');
 var request = require('request');
@@ -5,7 +11,7 @@ request = request.defaults({
   jar: true
 });
 var MongoClient = require('mongodb').MongoClient;
-var mongodb_url = process.env.MONGODB_URL || 'mongodb://localhost:27017/socialcmsdb_test';
+var mongodb_url = process.env.TEST_MONGODB_URL || 'mongodb://localhost:27017/socialcmsdb_test';
 var SCB = require('../lib/index.js');
 var port = process.env.PORT || 27891;
 
@@ -97,7 +103,7 @@ describe('form login test', function() {
         password: 'yyy'
       }
     }, function(error, response) {
-      assert.equal(response.statusCode, 500);
+      assert.equal(response.statusCode, 403);
       done();
     });
   });
@@ -109,7 +115,7 @@ describe('form login test', function() {
         password: ''
       }
     }, function(error, response) {
-      assert.equal(response.statusCode, 500);
+      assert.equal(response.statusCode, 403);
       done();
     });
   });
@@ -153,7 +159,7 @@ describe('create post test', function() {
         foo: 'bar'
       }
     }, function(error, response) {
-      assert.equal(response.statusCode, 500);
+      assert.equal(response.statusCode, 403);
       done();
     });
   });
@@ -165,7 +171,7 @@ describe('create post test', function() {
         foo: 'bar'
       }
     }, function(error, response) {
-      assert.equal(response.statusCode, 500);
+      assert.equal(response.statusCode, 403);
       done();
     });
   });
@@ -177,7 +183,7 @@ describe('create post test', function() {
         foo: 'bar'
       }
     }, function(error, response) {
-      assert.equal(response.statusCode, 500);
+      assert.equal(response.statusCode, 403);
       done();
     });
   });
@@ -190,7 +196,7 @@ describe('create post test', function() {
         foo: 'bar'
       }
     }, function(error, response) {
-      assert.equal(response.statusCode, 500);
+      assert.equal(response.statusCode, 403);
       done();
     });
   });
@@ -219,7 +225,7 @@ describe('create post test', function() {
         foo: 'bar'
       }
     }, function(error, response) {
-      assert.equal(response.statusCode, 500);
+      assert.equal(response.statusCode, 403);
       done();
     });
   });
@@ -233,7 +239,7 @@ describe('create post test', function() {
         foo: 'bar'
       }
     }, function(error, response) {
-      assert.equal(response.statusCode, 500);
+      assert.equal(response.statusCode, 403);
       done();
     });
   });
@@ -263,7 +269,7 @@ describe('create post test', function() {
         foo: 'bar'
       }
     }, function(error, response) {
-      assert.equal(response.statusCode, 500);
+      assert.equal(response.statusCode, 403);
       done();
     });
   });
@@ -294,7 +300,7 @@ describe('create post test', function() {
         foo: 'bar'
       }
     }, function(error, response) {
-      assert.equal(response.statusCode, 500);
+      assert.equal(response.statusCode, 403);
       done();
     });
   });
@@ -537,7 +543,7 @@ describe('delete post test', function() {
       url: 'http://localhost:' + port + '/posts/99999',
       json: true
     }, function(error, response) {
-      assert.equal(response.statusCode, 500, response.body);
+      assert.equal(response.statusCode, 403, response.body);
       done();
     });
   });
@@ -634,7 +640,7 @@ describe('basic like test', function() {
         post_id: base_post_id
       }
     }, function(error, response) {
-      assert.equal(response.statusCode, 500, response.body);
+      assert.equal(response.statusCode, 403, response.body);
       done();
     });
   });
