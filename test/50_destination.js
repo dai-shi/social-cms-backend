@@ -315,7 +315,7 @@ describe('check inbox', function() {
     var myAgent = new http.Agent();
     myAgent._addRequest = myAgent.addRequest;
     myAgent.addRequest = function(req, host, portnum, localAddress) {
-      if (host === 'localhost' && portnum === port) {
+      if (host === 'localhost' && portnum == port) { // jshint ignore: line
         var old = req._headers.cookie;
         req._headers.cookie = cookie + (old ? '; ' + old : '');
         req._headerNames.cookie = 'Cookie';
