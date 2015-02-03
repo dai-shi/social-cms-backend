@@ -119,7 +119,7 @@ describe('authorization with facebook', function() {
       json: true
     }, function(error, response) {
       assert.equal(response.statusCode, 200, response.body);
-      assert.equal(response.body.fullname, 'scbtest');
+      assert.equal(response.body.fullname, 'Scbtest');
       my_user_id = response.body._id;
       done();
     });
@@ -132,7 +132,7 @@ describe('authorization with facebook', function() {
     }, function(err, user_object) {
       if (err) return done(err);
       assert.equal(user_object._id, my_user_id);
-      assert.equal(user_object.fullname, 'scbtest');
+      assert.equal(user_object.fullname, 'Scbtest');
       assert.equal(user_object.system.facebook_user_id, facebook_user_id);
       done();
     });
@@ -169,7 +169,6 @@ describe('authorization with facebook', function() {
       done();
     });
   });
-  */
 
   it('should post a new post w/ destination to somebody', function(done) {
     if (!test_ready) return done();
@@ -198,6 +197,7 @@ describe('authorization with facebook', function() {
       done();
     });
   });
+  */
 
 });
 
