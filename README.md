@@ -111,6 +111,12 @@ A special endpoint:
 
     GET /users/myself
 
+Some more (undocumented) notes:
+* `skip` and `limit` options for query
+* `scope` attribute for access control
+* `destination` attribute for push (socket.io)
+* special string format for `Date` and `RegExp` types
+
 Screencast
 ----------
 
