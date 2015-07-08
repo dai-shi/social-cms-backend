@@ -83,38 +83,91 @@ With BreezeJS support:
 REST APIs
 ---------
 
-By default, there are 4 objects:
+By default, there are 4 object types:
 * post
 * user
 * group
 * like
 
-The following is the example of the post object endpoints.
+The following is the example of the post object endpoint.
 
-    POST /posts           (body: a JSON w/o system preserved keys)
+### List post objects
 
-    GET /posts?query=...  (query: MongoDB query parameter stringified)
+    GET /posts?query=...
 
-    GET /posts/inbox
+The "query" query parameter is a MongoDB query parameter object
+that is stringified (probably by JSON.stringify).
+* `skip` and `limit` query parameters are also supported.
 
-    GET /posts/count?query=...
-
-    GET /posts/aggregate?pipeline=...
+### Get one post object
 
     GET /posts/123
 
-    PUT /posts/123        (body: MongoDB update object, using update operators)
+The "123" is the `_id` of the post.
+
+### Save a new post
+
+    POST /posts
+
+The body is an object (JSON format) without system preserved properties such as
+`_id`, `system`, `created_time`, `owner`, `meta`.
+
+### Update a post
+
+    PUT /posts/123
+
+The body is a MongoDB update object (JSON format) using update operators.
+
+### Delete a post
 
     DELETE /posts/123
 
-A special endpoint:
+### Count posts
+
+    GET /posts/count?query=...
+
+This is a special endpoint.
+
+### Get following posts
+
+    GET /posts/inbox
+
+This is a special endpoint to only get posts that matches with predefined "following".
+More description follow in the next section.
+
+### Aggregate Posts
+
+    GET /posts/aggregate?pipeline=...
+
+This is a special endpoint to use MongoDB aggregate command.
+The "pipeline" query parameter is a MongoDB pipeline parameter object
+that is stringified (probably by JSON.stringify).
+
+### A special User endpoint
+
+(this is not a post endpoint.)
 
     GET /users/myself
 
-Some more (undocumented) notes:
-* `skip` and `limit` options for query
+This is to get current login user information.
+
+
+Object Scoping
+--------------
+
+TODO
 * `scope` attribute for access control
+
+Push notification (socket.io)
+-----------------------------
+
+TODO
 * `destination` attribute for push (socket.io)
+
+Extension to JSON format
+------------------------
+
+TODO
 * special string format for `Date` and `RegExp` types
 
 Screencast
