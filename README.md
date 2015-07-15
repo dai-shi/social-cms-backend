@@ -84,9 +84,9 @@ REST APIs
 ---------
 
 By default, there are 4 object types:
-* post
 * user
 * group
+* post
 * like
 
 The following is the example of the post object endpoint.
@@ -143,20 +143,66 @@ This is a special endpoint to use MongoDB aggregate command.
 The "pipeline" query parameter is a MongoDB pipeline parameter object
 that is stringified (probably by JSON.stringify).
 
-### A special User endpoint
+User and Group
+--------------
 
-(this is not a post endpoint.)
+User objects can also be accessed by REST API.
+For example, all user list can be fetched by
+
+    GET /users
+
+unless othrewise restricted.
+
+To get login user information, use this special endpoint.
 
     GET /users/myself
 
-This is to get current login user information.
+To create a group, save a group object like the following:
 
+    {
+      members: [
+        { user_id: 111 },
+        { user_id: 112 },
+        { user_id: 113 }
+      ]
+    }
 
-Object Scoping
+The `user_id` is the `_id` attribute of a user object.
+
+You can also define nested groups like the following:
+
+    {
+      members: [
+        { user_id: 111 },
+        { group_id: 211 },
+        { group_id: 212 }
+      ]
+    }
+
+The `group_id` is the `_id` attribute of a group object.
+
+Access Control
 --------------
 
-TODO
-* `scope` attribute for access control
+Object read permission is handled by the `scope` attribute.
+For example, if an object has the `scope` like this,
+
+    {
+      data: { ... },
+      scope: {
+        { user_id: 111 },
+	{ group_id: 211 }
+      }
+    }
+
+this object can only be accessed by the user `user_id=111` and
+all members of the group `group_id=211`.
+Notice `data` attribute is just an example.
+
+Object write permission is based on ownership,
+which means an on object can only be updated by the user who first saved.
+
+These access control can be customized by `hasPermission` SCB option.
 
 Push notification (socket.io)
 -----------------------------
@@ -169,6 +215,11 @@ Extension to JSON format
 
 TODO
 * special string format for `Date` and `RegExp` types
+
+Defining Object Types
+---------------------
+
+TODO
 
 Screencast
 ----------
