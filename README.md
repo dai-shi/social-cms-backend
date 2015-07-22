@@ -133,7 +133,7 @@ This is a special endpoint.
     GET /posts/inbox
 
 This is a special endpoint to only get posts that matches with predefined "following".
-More description follow in the next section.
+More description follows in the next section.
 
 ### Aggregate Posts
 
@@ -204,11 +204,59 @@ which means an on object can only be updated by the user who first saved.
 
 These access control can be customized by `hasPermission` SCB option.
 
-Push notification (socket.io)
+Followings and Followers
+------------------------
+
+There is a special endpoint `inbox`.
+if an object has `destination` property and if a user follows
+that destination, that object is added to the user `inbox`.
+For example, suppose a user with `user_id=111` follows
+another user with `user_id=112`, a user object will be
+
+    {
+      _id: 111,
+      following: [{
+        user_id: 112
+      }]
+    }
+
+and if an object has `destination` like the following
+
+    {
+      destination: [{
+        user_id: 112
+      }]
+    }
+
+the user with `user_id=111` will see this object in one's own `inbox`.
+
+A user can also follow a group, in this case the user object would look
+like the following.
+
+    {
+      _id: 111,
+      following: [{
+        group_id: 211
+      }]
+    }
+
+There is a SCB option `always_follow_myself` and if it is `true`,
+it is equivalent to having a user `user_id=111` object like
+
+    {
+      _id: 111,
+      following: [{
+        user_id: 111
+      }]
+    }
+
+for all users.
+
+Push by socket.io
 -----------------------------
 
 TODO
-* `destination` attribute for push (socket.io)
+* socket.io message
 
 Extension to JSON format
 ------------------------
