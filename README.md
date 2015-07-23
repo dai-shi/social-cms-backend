@@ -191,7 +191,7 @@ For example, if an object has the `scope` like this,
       data: { ... },
       scope: {
         { user_id: 111 },
-	{ group_id: 211 }
+        { group_id: 211 }
       }
     }
 
@@ -200,7 +200,7 @@ all members of the group `group_id=211`.
 Notice `data` attribute is just an example.
 
 Object write permission is based on ownership,
-which means an on object can only be updated by the user who first saved.
+which means an object can only be updated by the user who first saved.
 
 These access control can be customized by `hasPermission` SCB option.
 
