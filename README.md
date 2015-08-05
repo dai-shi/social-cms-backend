@@ -288,7 +288,7 @@ We have a special notion for `Date` and `RegExp` like the following.
 Defining Object Types
 ---------------------
 
-The all examples above are about the post object.
+The examples above are all about the post object.
 You can define any objects and their routes in an SCB option.
 
     routes: [{
@@ -300,6 +300,9 @@ You can define any objects and their routes in an SCB option.
     }, {
       object_type: 'article',
       object_prefix: '/rest/articles'
+    }, {
+      object_type: 'comment',
+      object_prefix: '/rest/comments'
     }, {
       object_type: 'like',
       object_prefix: '/rest/likes'
@@ -315,7 +318,7 @@ If you want to create a unique index, you can define it in an SCB option.
       object_fields: ['owner', 'article_id']
     }
 
-This will restrict one "like" at most for one article.
+This will restrict one "like" at most for one article for each user.
 
 Screencast
 ----------
