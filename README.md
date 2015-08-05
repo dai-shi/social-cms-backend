@@ -240,7 +240,7 @@ like the following.
       }]
     }
 
-There is a SCB option `always_follow_myself` and if it is `true`,
+There is an SCB option `always_follow_myself` and if it is `true`,
 it is equivalent to having a user `user_id=111` object like
 
     {
@@ -255,19 +255,67 @@ for all users.
 Push by socket.io
 -----------------------------
 
-TODO
-* socket.io message
+If an object has a `destination` property and a user follows it,
+the server pushes the object to to the user by socket.io,
+if socket.io is configured properly (See the example in "How To Use").
+
+For example, if a "post" object like the following is inserted;
+
+    {
+      destination: [{
+        group_id: 211
+      }]
+    }
+
+all the users who follow `group_id=211` will receive the whole object
+as a message identified by `new-post`.
+So the clients of the users are expected to listen to it by the following.
+
+    socket.on('new-post', function(data) {
+      //do something with data
+    });
 
 Extension to JSON format
 ------------------------
 
-TODO
-* special string format for `Date` and `RegExp` types
+Sometimes, we want to encode JavaScript objects in JSON.
+We have a special notion for `Date` and `RegExp` like the following.
+
+    {"key1":"val1", "key2": "/Date(12345)/"} //12345 is milliseconds
+
+    {"key3":"val3", "key4": "/RegExp([A-Z][a-z]+)/"}
 
 Defining Object Types
 ---------------------
 
-TODO
+The all examples above are about the post object.
+You can define any objects and their routes in an SCB option.
+
+    routes: [{
+      object_type: 'user',
+      object_prefix: '/rest/users'
+    }, {
+      object_type: 'group',
+      object_prefix: '/rest/posts'
+    }, {
+      object_type: 'article',
+      object_prefix: '/rest/articles'
+    }, {
+      object_type: 'like',
+      object_prefix: '/rest/likes'
+    }]
+
+However, keeping `user` and `group` objects are always required for
+authentication and authorization.
+
+If you want to create a unique index, you can define it in an SCB option.
+
+    ensure_unique_index: {
+      object_type: 'like',
+      object_fields: ['owner', 'article_id']
+    }
+
+This will restrict one "like" at most for one article.
 
 Screencast
 ----------
