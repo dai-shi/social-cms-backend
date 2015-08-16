@@ -24,6 +24,8 @@ How to install
 How to use
 ----------
 
+### Typical configuration:
+
     var express = require('express');
     var SCB = require('social-cms-backend');
     var app = express();
@@ -35,7 +37,9 @@ How to use
     }));
     app.listen(3000);
 
-With socket.io v1.0
+Notice two environment variables which have to be obtrained from <https://developers.facebook.com/> and set properly. Refer [Facebook Doc](https://developers.facebook.com/docs/apps/register) for more information.
+
+### With socket.io v1.0
 
     var http = require('http');
     var express = require('express');
@@ -54,7 +58,7 @@ With socket.io v1.0
     sio.use(SCB.socket_io(SCB_options));
     server.listen(3000);
 
-With HTTP DIGEST strategy:
+### With HTTP DIGEST strategy
 
     var SCB_options = {
       mongodb_url: 'mongodb://localhost:27017/socialcmsdb',
@@ -64,7 +68,7 @@ With HTTP DIGEST strategy:
       }
     };
 
-With BreezeJS support:
+### With BreezeJS support
 
     var SCB_options = {
       mongodb_url: 'mongodb://localhost:27017/socialcmsdb',
@@ -281,9 +285,9 @@ Extension to JSON format
 Sometimes, we want to encode JavaScript objects in JSON.
 We have a special notion for `Date` and `RegExp` like the following.
 
-    {"key1":"val1", "key2": "/Date(12345)/"} //12345 is milliseconds
+    {"key1":"val1","key2":"/Date(12345)/"} //12345 is milliseconds
 
-    {"key3":"val3", "key4": "/RegExp([A-Z][a-z]+)/"}
+    {"key3":"val3","key4":"/RegExp([A-Z][a-z]+)/"}
 
 Defining Object Types
 ---------------------
