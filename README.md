@@ -39,7 +39,7 @@ How to use
 
 Notice two environment variables which have to be obtrained from <https://developers.facebook.com/> and set properly. Refer [Facebook Doc](https://developers.facebook.com/docs/apps/register) for more information.
 
-### With socket.io v1.0
+### With socket.io v1.0:
 
     var http = require('http');
     var express = require('express');
@@ -58,7 +58,7 @@ Notice two environment variables which have to be obtrained from <https://develo
     sio.use(SCB.socket_io(SCB_options));
     server.listen(3000);
 
-### With HTTP DIGEST strategy
+### With HTTP DIGEST strategy:
 
     var SCB_options = {
       mongodb_url: 'mongodb://localhost:27017/socialcmsdb',
@@ -68,7 +68,7 @@ Notice two environment variables which have to be obtrained from <https://develo
       }
     };
 
-### With BreezeJS support
+### With BreezeJS support:
 
     var SCB_options = {
       mongodb_url: 'mongodb://localhost:27017/socialcmsdb',
