@@ -3,11 +3,11 @@
   <head>
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="viewport" content="width=640" />
+    <meta name="viewport" content="width=640">
 
-    <link rel="stylesheet" href="stylesheets/core.css" media="screen"/>
-    <link rel="stylesheet" href="stylesheets/mobile.css" media="handheld, only screen and (max-device-width:640px)"/>
-    <link rel="stylesheet" href="stylesheets/pygment_trac.css"/>
+    <link rel="stylesheet" href="stylesheets/core.css" media="screen">
+    <link rel="stylesheet" href="stylesheets/mobile.css" media="handheld, only screen and (max-device-width:640px)">
+    <link rel="stylesheet" href="stylesheets/github-light.css">
 
     <script type="text/javascript" src="javascripts/modernizr.js"></script>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
@@ -47,12 +47,12 @@
 
       <section id="main_content">
         <h1>
-<a name="social-cms-backend" class="anchor" href="#social-cms-backend"><span class="octicon octicon-link"></span></a>social-cms-backend</h1>
+<a id="social-cms-backend" class="anchor" href="#social-cms-backend" aria-hidden="true"><span class="octicon octicon-link"></span></a>social-cms-backend</h1>
 
 <p>Express middleware to provide schema-less REST APIs for creating a social networking website primarily using angular.js. It comes with built-in authentication, authorization and notification features.</p>
 
 <h2>
-<a name="motivation" class="anchor" href="#motivation"><span class="octicon octicon-link"></span></a>Motivation</h2>
+<a id="motivation" class="anchor" href="#motivation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Motivation</h2>
 
 <p>There exists several MVC framework libraries for node.js
 that are inspired by Rails.  But they might be a bit outdated,
@@ -65,13 +65,16 @@ which is the combination of a domain-specific REST API library
 like SNS/Twitter/Facebook in a closed/private environment.</p>
 
 <h2>
-<a name="how-to-install" class="anchor" href="#how-to-install"><span class="octicon octicon-link"></span></a>How to install</h2>
+<a id="how-to-install" class="anchor" href="#how-to-install" aria-hidden="true"><span class="octicon octicon-link"></span></a>How to install</h2>
 
 <pre><code>$ npm install social-cms-backend
 </code></pre>
 
 <h2>
-<a name="how-to-use" class="anchor" href="#how-to-use"><span class="octicon octicon-link"></span></a>How to use</h2>
+<a id="how-to-use" class="anchor" href="#how-to-use" aria-hidden="true"><span class="octicon octicon-link"></span></a>How to use</h2>
+
+<h3>
+<a id="typical-configuration" class="anchor" href="#typical-configuration" aria-hidden="true"><span class="octicon octicon-link"></span></a>Typical configuration:</h3>
 
 <pre><code>var express = require('express');
 var SCB = require('social-cms-backend');
@@ -85,7 +88,10 @@ app.use(SCB.middleware({
 app.listen(3000);
 </code></pre>
 
-<p>With socket.io 1.0 (upcoming):</p>
+<p>Notice two environment variables which have to be obtrained from <a href="https://developers.facebook.com/">https://developers.facebook.com/</a> and set properly. Refer <a href="https://developers.facebook.com/docs/apps/register">Facebook Doc</a> for more information.</p>
+
+<h3>
+<a id="with-socketio-v10" class="anchor" href="#with-socketio-v10" aria-hidden="true"><span class="octicon octicon-link"></span></a>With socket.io v1.0:</h3>
 
 <pre><code>var http = require('http');
 var express = require('express');
@@ -105,7 +111,8 @@ sio.use(SCB.socket_io(SCB_options));
 server.listen(3000);
 </code></pre>
 
-<p>With HTTP DIGEST strategy:</p>
+<h3>
+<a id="with-http-digest-strategy" class="anchor" href="#with-http-digest-strategy" aria-hidden="true"><span class="octicon octicon-link"></span></a>With HTTP DIGEST strategy:</h3>
 
 <pre><code>var SCB_options = {
   mongodb_url: 'mongodb://localhost:27017/socialcmsdb',
@@ -116,7 +123,8 @@ server.listen(3000);
 };
 </code></pre>
 
-<p>With BreezeJS support:</p>
+<h3>
+<a id="with-breezejs-support" class="anchor" href="#with-breezejs-support" aria-hidden="true"><span class="octicon octicon-link"></span></a>With BreezeJS support:</h3>
 
 <pre><code>var SCB_options = {
   mongodb_url: 'mongodb://localhost:27017/socialcmsdb',
@@ -134,42 +142,287 @@ server.listen(3000);
 </code></pre>
 
 <h2>
-<a name="rest-apis" class="anchor" href="#rest-apis"><span class="octicon octicon-link"></span></a>REST APIs</h2>
+<a id="rest-apis" class="anchor" href="#rest-apis" aria-hidden="true"><span class="octicon octicon-link"></span></a>REST APIs</h2>
 
-<p>By default, there are 4 objects:</p>
+<p>By default, there are 4 object types:</p>
 
 <ul>
-<li>post</li>
 <li>user</li>
 <li>group</li>
+<li>post</li>
 <li>like</li>
-</ul><p>The following is the example of the post object endpoints.</p>
+</ul>
 
-<pre><code>POST /posts           (body: a JSON w/o system preserved keys)
+<p>The following is the example of the post object endpoint.</p>
 
-GET /posts?query=...  (query: MongoDB query parameter stringified)
+<h3>
+<a id="list-post-objects" class="anchor" href="#list-post-objects" aria-hidden="true"><span class="octicon octicon-link"></span></a>List post objects</h3>
 
-GET /posts/inbox
-
-GET /posts/count?query=...
-
-GET /posts/123
-
-PUT /posts/123        (body: MongoDB update object, using update operators)
-
-DELETE /posts/123
+<pre><code>GET /posts?query=...
 </code></pre>
 
-<p>A special endpoint:</p>
+<p>The "query" query parameter is a MongoDB query parameter object
+that is stringified (probably by JSON.stringify).</p>
+
+<ul>
+<li>
+<code>skip</code> and <code>limit</code> query parameters are also supported.</li>
+</ul>
+
+<h3>
+<a id="get-one-post-object" class="anchor" href="#get-one-post-object" aria-hidden="true"><span class="octicon octicon-link"></span></a>Get one post object</h3>
+
+<pre><code>GET /posts/123
+</code></pre>
+
+<p>The "123" is the <code>_id</code> of the post.</p>
+
+<h3>
+<a id="save-a-new-post" class="anchor" href="#save-a-new-post" aria-hidden="true"><span class="octicon octicon-link"></span></a>Save a new post</h3>
+
+<pre><code>POST /posts
+</code></pre>
+
+<p>The body is an object (JSON format) without system preserved properties such as
+<code>_id</code>, <code>system</code>, <code>created_time</code>, <code>owner</code>, <code>meta</code>.</p>
+
+<h3>
+<a id="update-a-post" class="anchor" href="#update-a-post" aria-hidden="true"><span class="octicon octicon-link"></span></a>Update a post</h3>
+
+<pre><code>PUT /posts/123
+</code></pre>
+
+<p>The body is a MongoDB update object (JSON format) using update operators.</p>
+
+<h3>
+<a id="delete-a-post" class="anchor" href="#delete-a-post" aria-hidden="true"><span class="octicon octicon-link"></span></a>Delete a post</h3>
+
+<pre><code>DELETE /posts/123
+</code></pre>
+
+<h3>
+<a id="count-posts" class="anchor" href="#count-posts" aria-hidden="true"><span class="octicon octicon-link"></span></a>Count posts</h3>
+
+<pre><code>GET /posts/count?query=...
+</code></pre>
+
+<p>This is a special endpoint.</p>
+
+<h3>
+<a id="get-following-posts" class="anchor" href="#get-following-posts" aria-hidden="true"><span class="octicon octicon-link"></span></a>Get following posts</h3>
+
+<pre><code>GET /posts/inbox
+</code></pre>
+
+<p>This is a special endpoint to only get posts that matches with predefined "following".
+More description follows in the next section.</p>
+
+<h3>
+<a id="aggregate-posts" class="anchor" href="#aggregate-posts" aria-hidden="true"><span class="octicon octicon-link"></span></a>Aggregate Posts</h3>
+
+<pre><code>GET /posts/aggregate?pipeline=...
+</code></pre>
+
+<p>This is a special endpoint to use MongoDB aggregate command.
+The "pipeline" query parameter is a MongoDB pipeline parameter object
+that is stringified (probably by JSON.stringify).</p>
+
+<h2>
+<a id="user-and-group" class="anchor" href="#user-and-group" aria-hidden="true"><span class="octicon octicon-link"></span></a>User and Group</h2>
+
+<p>User objects can also be accessed by REST API.
+For example, all user list can be fetched by</p>
+
+<pre><code>GET /users
+</code></pre>
+
+<p>unless othrewise restricted.</p>
+
+<p>To get login user information, use this special endpoint.</p>
 
 <pre><code>GET /users/myself
 </code></pre>
 
+<p>To create a group, save a group object like the following:</p>
+
+<pre><code>{
+  members: [
+    { user_id: 111 },
+    { user_id: 112 },
+    { user_id: 113 }
+  ]
+}
+</code></pre>
+
+<p>The <code>user_id</code> is the <code>_id</code> attribute of a user object.</p>
+
+<p>You can also define nested groups like the following:</p>
+
+<pre><code>{
+  members: [
+    { user_id: 111 },
+    { group_id: 211 },
+    { group_id: 212 }
+  ]
+}
+</code></pre>
+
+<p>The <code>group_id</code> is the <code>_id</code> attribute of a group object.</p>
+
 <h2>
-<a name="screencast" class="anchor" href="#screencast"><span class="octicon octicon-link"></span></a>Screencast</h2>
+<a id="access-control" class="anchor" href="#access-control" aria-hidden="true"><span class="octicon octicon-link"></span></a>Access Control</h2>
+
+<p>Object read permission is handled by the <code>scope</code> attribute.
+For example, if an object has the <code>scope</code> like this,</p>
+
+<pre><code>{
+  data: { ... },
+  scope: {
+    { user_id: 111 },
+    { group_id: 211 }
+  }
+}
+</code></pre>
+
+<p>this object can only be accessed by the user <code>user_id=111</code> and
+all members of the group <code>group_id=211</code>.
+Notice <code>data</code> attribute is just an example.</p>
+
+<p>Object write permission is based on ownership,
+which means an object can only be updated by the user who first saved.</p>
+
+<p>These access control can be customized by <code>hasPermission</code> SCB option.</p>
+
+<h2>
+<a id="followings-and-followers" class="anchor" href="#followings-and-followers" aria-hidden="true"><span class="octicon octicon-link"></span></a>Followings and Followers</h2>
+
+<p>There is a special endpoint <code>inbox</code>.
+if an object has <code>destination</code> property and if a user follows
+that destination, that object is added to the user <code>inbox</code>.
+For example, suppose a user with <code>user_id=111</code> follows
+another user with <code>user_id=112</code>, a user object will be</p>
+
+<pre><code>{
+  _id: 111,
+  following: [{
+    user_id: 112
+  }]
+}
+</code></pre>
+
+<p>and if an object has <code>destination</code> like the following</p>
+
+<pre><code>{
+  destination: [{
+    user_id: 112
+  }]
+}
+</code></pre>
+
+<p>the user with <code>user_id=111</code> will see this object in one's own <code>inbox</code>.</p>
+
+<p>A user can also follow a group, in this case the user object would look
+like the following.</p>
+
+<pre><code>{
+  _id: 111,
+  following: [{
+    group_id: 211
+  }]
+}
+</code></pre>
+
+<p>There is an SCB option <code>always_follow_myself</code> and if it is <code>true</code>,
+it is equivalent to having a user <code>user_id=111</code> object like</p>
+
+<pre><code>{
+  _id: 111,
+  following: [{
+    user_id: 111
+  }]
+}
+</code></pre>
+
+<p>for all users.</p>
+
+<h2>
+<a id="push-by-socketio" class="anchor" href="#push-by-socketio" aria-hidden="true"><span class="octicon octicon-link"></span></a>Push by socket.io</h2>
+
+<p>If an object has a <code>destination</code> property and a user follows it,
+the server pushes the object to to the user by socket.io,
+if socket.io is configured properly (See the example in "How To Use").</p>
+
+<p>For example, if a "post" object like the following is inserted;</p>
+
+<pre><code>{
+  destination: [{
+    group_id: 211
+  }]
+}
+</code></pre>
+
+<p>all the users who follow <code>group_id=211</code> will receive the whole object
+as a message identified by <code>new-post</code>.
+So the clients of the users are expected to listen to it by the following.</p>
+
+<pre><code>socket.on('new-post', function(data) {
+  //do something with data
+});
+</code></pre>
+
+<h2>
+<a id="extension-to-json-format" class="anchor" href="#extension-to-json-format" aria-hidden="true"><span class="octicon octicon-link"></span></a>Extension to JSON format</h2>
+
+<p>Sometimes, we want to encode JavaScript objects in JSON.
+We have a special notion for <code>Date</code> and <code>RegExp</code> like the following.</p>
+
+<pre><code>{"key1":"val1","key2":"/Date(12345)/"} //12345 is milliseconds
+
+{"key3":"val3","key4":"/RegExp([A-Z][a-z]+)/"}
+</code></pre>
+
+<h2>
+<a id="defining-object-types" class="anchor" href="#defining-object-types" aria-hidden="true"><span class="octicon octicon-link"></span></a>Defining Object Types</h2>
+
+<p>The examples above are all about the post object.
+You can define any objects and their routes in an SCB option.</p>
+
+<pre><code>routes: [{
+  object_type: 'user',
+  object_prefix: '/rest/users'
+}, {
+  object_type: 'group',
+  object_prefix: '/rest/posts'
+}, {
+  object_type: 'article',
+  object_prefix: '/rest/articles'
+}, {
+  object_type: 'comment',
+  object_prefix: '/rest/comments'
+}, {
+  object_type: 'like',
+  object_prefix: '/rest/likes'
+}]
+</code></pre>
+
+<p>However, keeping <code>user</code> and <code>group</code> objects are always required for
+authentication and authorization.</p>
+
+<p>If you want to create a unique index, you can define it in an SCB option.</p>
+
+<pre><code>ensure_unique_index: {
+  object_type: 'like',
+  object_fields: ['owner', 'article_id']
+}
+</code></pre>
+
+<p>This will restrict one "like" at most for one article for each user.</p>
+
+<h2>
+<a id="screencast" class="anchor" href="#screencast" aria-hidden="true"><span class="octicon octicon-link"></span></a>Screencast</h2>
 
 <h3>
-<a name="how-to-create-a-twitter-clone-in-15-minutes" class="anchor" href="#how-to-create-a-twitter-clone-in-15-minutes"><span class="octicon octicon-link"></span></a>How to create a Twitter clone in 15 minutes</h3>
+<a id="how-to-create-a-twitter-clone-in-15-minutes" class="anchor" href="#how-to-create-a-twitter-clone-in-15-minutes" aria-hidden="true"><span class="octicon octicon-link"></span></a>How to create a Twitter clone in 15 minutes</h3>
 
 <p>Screencast preview (quadruple speed):</p>
 
@@ -189,8 +442,10 @@ DELETE /posts/123
 <li>You can try the running web service of the code
 <a href="http://twitterclonesample-nodeangularapp.rhcloud.com/" target="_blank">here</a>
 </li>
-</ul><h2>
-<a name="todos" class="anchor" href="#todos"><span class="octicon octicon-link"></span></a>TODOs</h2>
+</ul>
+
+<h2>
+<a id="todos" class="anchor" href="#todos" aria-hidden="true"><span class="octicon octicon-link"></span></a>TODOs</h2>
 
 <ul>
 <li>Notification: email</li>
@@ -205,7 +460,7 @@ DELETE /posts/123
           <span class="left-tail"></span>
           <span class="right-tail"></span>
         </span>
-        <p>Generated with <a href="http://pages.github.com">GitHub Pages</a> using Merlot</p>
+        <p>Generated with <a href="https://pages.github.com">GitHub Pages</a> using Merlot</p>
         <span class="octocat"></span>
       </footer>
 
