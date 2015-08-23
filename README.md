@@ -84,6 +84,31 @@ Notice two environment variables which have to be obtrained from <https://develo
       }]
     };
 
+
+Login APIs
+----------
+
+The login API for Facebook authenticate is the following:
+
+    GET /login/facebook
+
+Typically, the HTML would look like this:
+
+    <a href="/login/facebook">Login</a>
+
+In the case of DIGEST authentication, the API is:
+
+    GET /login/digest
+
+The way to create a user for DIGEST authentication is:
+
+    POST /adduser/digest
+    Content-Type: application/json
+    Content-Length: ...
+    
+    {"name":"...","passhash":"...","initdata":"{...}"}
+
+
 REST APIs
 ---------
 
