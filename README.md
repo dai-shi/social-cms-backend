@@ -44,10 +44,16 @@ Notice two environment variables which have to be obtrained from <https://develo
     var http = require('http');
     var express = require('express');
     var socket_io = require('socket.io');
+    var expressSession = require('express-session');
     var SCB = require('social-cms-backend');
     var app = express();
     var SCB_options = {
       mongodb_url: 'mongodb://localhost:27017/socialcmsdb',
+      session_middleware: expressSession({
+        secret: process.env.SESSION_SECRET,
+        resave: false,
+        saveUninitialized: true
+      }),
       passport_strategy: 'facebook',
       facebook_app_id: process.env.FACEBOOK_APP_ID,
       facebook_app_secret: process.env.FACEBOOK_APP_SECRET
