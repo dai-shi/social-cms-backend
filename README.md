@@ -331,7 +331,7 @@ You can define any objects and their routes in an SCB option.
       object_prefix: '/rest/users'
     }, {
       object_type: 'group',
-      object_prefix: '/rest/posts'
+      object_prefix: '/rest/groups'
     }, {
       object_type: 'article',
       object_prefix: '/rest/articles'
