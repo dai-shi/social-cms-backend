@@ -224,10 +224,10 @@ For example, if an object has the `scope` like this,
 
     {
       data: { ... },
-      scope: {
+      scope: [
         { user_id: 111 },
         { group_id: 211 }
-      }
+      ]
     }
 
 this object can only be accessed by the user `user_id=111` and
