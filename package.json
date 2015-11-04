@@ -19,9 +19,11 @@
     "passport-facebook": "0.1.6",
     "passport-http": "0.2.2",
     "passport-local": "0.1.6",
+    "passport-twitter": "^1.0.3",
     "underscore": "1.4.4"
   },
   "devDependencies": {
+    "cheerio-httpcli": "^0.3.5",
     "express": "~4.10.6",
     "jsdom": "0.10.6",
     "mocha": "~2.0.1",
