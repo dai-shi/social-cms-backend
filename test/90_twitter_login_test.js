@@ -159,51 +159,6 @@ describe('authorization with twitter', function() {
   });
 });
 
-//application notification test
-
-// it('should receive twitter notification', function(done) {
-//   if (!test_ready) return done();
-//   request.get({
-//     uri: 'https://graph.twitter.com/' + facebook_user_id + '/notifications?access_token=' + facebook_user_access_token,
-//     json: true
-//   }, function(error, response) {
-//     assert.equal(response.statusCode, 200, response.body);
-//     assert.equal(response.body.data.length, 1);
-//     assert.ok(response.body.data[0].title.indexOf('new post!') >= 0);
-//     done();
-//   });
-// });
-
-// it('should post a new post w/ destination to somebody', function(done) {
-//   if (!test_ready) return done();
-//   request.post('http://localhost:' + port + '/posts', {
-//     json: {
-//       content: 'test post2',
-//       message: 'new post!2',
-//       destination: [{
-//         user_id: 999
-//       }]
-//     }
-//   }, function(error, response) {
-//     assert.equal(response.statusCode, 200, response.body);
-//     setTimeout(done, 1000);
-//   });
-// });
-
-// it('should receive twitter notification unchanged', function(done) {
-//   if (!test_ready) return done();
-//   request.get({
-//     uri: 'https://graph.twitter.com/' + facebook_user_id + '/notifications?access_token=' + facebook_user_access_token,
-//     json: true
-//   }, function(error, response) {
-//     assert.equal(response.statusCode, 200, response.body);
-//     assert.equal(response.body.data.length, 1);
-//     done();
-//   });
-// });
-// |)}>#
-
-
 describe('shutdown server', function() {
   it('should stop the server', function(done) {
     if (!test_ready) return done();
