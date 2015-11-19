@@ -1,4 +1,5 @@
 *~
+.idea
 .vimrc
 node_modules
 old
