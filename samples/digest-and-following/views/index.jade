@@ -1,0 +1,44 @@
+extends layout
+
+block content
+  div(ng-controller="homeController")
+    span(ng-hide="myself")
+      p You should login first. 
+      p You can login as ichiro, jiro, or saburo with pass is 'test'.
+      p You can check posted messages at 3 browsers which login each user.
+      a(href="/login/digest") LogIn
+    span(ng-show="myself")
+      h5 You are loging as {{myself.name}} 
+      p You are following :
+      .list-group
+        .list-group-item(ng-repeat="user in myself.following") {{user.name}}
+      hr
+      .form-inline
+        .form-group
+          input.form-control(type="text", ng-model="message", placeholder="Write something")
+        
+        .form-group
+          .radio
+            label
+              input(type="radio", ng-model="$parent.destination", value="public", name="destinationList")
+              | Public Post
+        .form-group(ng-repeat="user in myself.following")
+          .radio
+            label
+              input(type="radio", ng-model="$parent.destination", value="{{user.idInfo}}", name="destinationList")
+              | {{user.name}}
+        .form-group
+          button.btn.btn-default(ng-click="postMessage(message); message='';", ng-disabled="!message") Send
+      .row
+        .col-sm-6
+          h5 Posts 
+          .list-group
+            .list-group-item(ng-repeat="post in posts")
+              span {{post.message}}
+              span.pull-right (Time : {{post.created_time}}))
+        .col-sm-6
+          h5 Your Inbox 
+          .list-group
+            .list-group-item(ng-repeat="post in inbox")
+              span {{post.message}}
+              span.pull-right (Time : {{post.created_time}}))
