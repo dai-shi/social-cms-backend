@@ -1,52 +1,13 @@
 {
-  "name": "social-cms-backend",
-  "description": "Express middleware to provide schema-less REST APIs for creating a social networking website primarily using angular.js. It comes with built-in authentication, authorization and notification features.",
-  "version": "0.7.0",
-  "author": "Daishi Kato <daishi@axlight.com>",
-  "contributors": [
-    "Shunsuke Watanabe <craftgear@gmail.com>",
-    "Teruhisa Yamamoto"
-  ],
+  "name": "social-cms-backend-local",
+  "version": "0.0.1",
+  "private": true,
   "dependencies": {
-    "async": "0.2.10",
-    "body-parser": "1.0.2",
-    "breeze-mongodb": "0.0.6",
-    "cookie-parser": "1.0.1",
-    "express-session": "1.0.4",
-    "fb": "0.6.2",
-    "mongodb": "1.4.35",
-    "passport": "0.1.18",
-    "passport-facebook": "0.1.6",
-    "passport-http": "0.2.2",
-    "passport-local": "0.1.6",
-    "passport-twitter": "1.0.3",
-    "underscore": "1.4.4"
-  },
-  "devDependencies": {
-    "express": "~4.10.6",
-    "jsdom": "0.10.6",
-    "mocha": "~2.0.1",
-    "request": "https://github.com/mikeal/request/archive/882b01bae5.tar.gz",
-    "socket.io": "1.2.1",
-    "socket.io-client": "1.2.1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/dai-shi/social-cms-backend.git"
-  },
-  "keywords": [
-    "express",
-    "social",
-    "cms",
-    "rest",
-    "angular"
-  ],
-  "main": "./lib/index.js",
-  "scripts": {
-    "test": "env NODE_ENV=test mocha -t 15000"
-  },
-  "license": "BSD",
-  "engines": {
-    "node": "0.10.35"
+    "body-parser": "1.8.4",
+    "cookie-parser": "1.3.3",
+    "express": "4.9.8",
+    "express-session": "1.9.3",
+    "jade": "1.6.0",
+    "social-cms-backend": "0.7.1"
   }
 }

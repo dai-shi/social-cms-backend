@@ -45,6 +45,8 @@ angular.module('mainModule').run(function($rootScope, userResource) {
 
 angular.module('mainModule').controller('homeController', function($scope, $cookies, postResource) {
 
+  $scope.username = $scope.myself.name;
+
   // check login error
   if ($cookies['hajuku-input-login']) {
     delete $cookies['hajuku-input-login'];
@@ -57,15 +59,14 @@ angular.module('mainModule').controller('homeController', function($scope, $cook
     });
   }
   fetchPosts();
-console.log($scope.myself);
+console.log($scope.myself.name);
   $scope.addPost = function(message) {
     if (!message) return;
     if (!$scope.myself) return;
     postResource.save({
       message: message,
       from: {
-        // id: 'local_' + $scope.myself._id,
-        name: $scope.username
+        name: $scope.myself.name
       }
     }, fetchPosts);
   };
@@ -96,7 +97,7 @@ angular.module('mainModule').controller('addUserController', function($scope, $l
       data: {
         username: username,
         password: password,
-        initdata: JSON.stringify({name: username}) /////////
+        initdata: JSON.stringify({name: username})
       }
     }).success(function(res, status, headers, config) {
 
