@@ -1,0 +1,7 @@
+.container
+  h3 ユーザー登録
+
+  input.form-control(type="text", ng-model="username", placeholder="Username")
+  input.form-control(type="password", ng-model="password", placeholder="Password")
+  br
+  button.btn.btn-primary(type="submit", ng-click="addUser(username, password);", ng-disabled="!username && !password") 登録

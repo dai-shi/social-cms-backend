@@ -1,0 +1,15 @@
+.container
+  h3 ホーム
+  p(ng-hide="myself")
+    | 閲覧や投稿するためには
+    a(href="/#/login") ログイン
+    | してください
+  form.form-inline
+    .form-group
+      input.form-control(type="text", ng-model="message", placeholder="メッセージを入力してください")
+    button.btn.btn-primary(type="submit", ng-click="addPost(message); message='';", ng-disabled="!message") 投稿
+    span(ng-show="username") （投稿者 {{username}}）
+  hr
+  h4 投稿一覧(最新20件)
+  .list-group
+    .list-group-item(ng-repeat="post in posts") {{post.message}} ({{post.from.name}}) {{post.created_time | date:short}}
