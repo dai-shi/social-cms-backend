@@ -1,0 +1,11 @@
+.container
+  h3 ログイン
+
+  form(action="/login/local", method="post", ng-submit="checkLogin();")
+    input.form-control(type="text", name="username", ng-model="username", placeholder="Username")
+    input.form-control(type="password", name="password", ng-model="password", placeholder="Password")
+    br
+    button.btn.btn-primary(type="submit") Login
+
+  | ユーザー登録は
+  a(href="/#/addUser") こちら
