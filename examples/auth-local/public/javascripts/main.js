@@ -1,8 +1,3 @@
-/*
-  Copyright (C) 2014-2015, Daishi Kato <daishi@axlight.com>
-  All rights reserved.
-*/
-
 /* jshint undef: true, unused: true, latedef: true */
 /* jshint quotmark: single, eqeqeq: true, camelcase: true */
 /* jshint devel: true, globalstrict: true */
@@ -48,8 +43,8 @@ angular.module('mainModule').controller('homeController', function($scope, $cook
   $scope.username = $scope.myself.name;
 
   // check login error
-  if ($cookies['hajuku-input-login']) {
-    delete $cookies['hajuku-input-login'];
+  if ($cookies['login-check-flag']) {
+    delete $cookies['login-check-flag'];
   }
 
   function fetchPosts() {
@@ -74,14 +69,14 @@ angular.module('mainModule').controller('homeController', function($scope, $cook
 angular.module('mainModule').controller('loginController', function($scope, $cookies) {
 
   // check login error
-  if ($cookies['hajuku-input-login']) {
+  if ($cookies['login-check-flag']) {
     window.alert('Login error');
-    delete $cookies['hajuku-input-login'];
+    delete $cookies['login-check-flag'];
   }
 
   // submit button
   $scope.checkLogin = function() {
-    $cookies['hajuku-input-login'] = 'on';
+    $cookies['login-check-flag'] = 'on';
   };
 });
 

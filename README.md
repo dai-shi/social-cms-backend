@@ -21,10 +21,48 @@ How to install
 
     $ npm install social-cms-backend
 
+Examples
+--------
+
+The followings are minimal example code that uses social-cms-backend.
+
+- [auth-local](examples/auth-local/) --- Simple BBS with local authentication
+
+Screencast
+----------
+
+### How to create a Twitter clone in 15 minutes
+
+Screencast preview (quadruple speed):
+
+![Preview](http://dai-shi.github.io/social-cms-backend/ttyrecord.gif)
+
+<a href="http://dai-shi.github.io/social-cms-backend/ttyplay.html" target="_blank">Controllable screencast at normal speed</a>
+
+Notes:
+
+* There is a typo found after the recording.
+  `/javascript/main.js -> /javascripts/main.js`
+* The resulting code is available
+  [here](https://github.com/dai-shi/twitter-clone-sample/tree/20130804_recorded)
+* You can try the running web service of the code
+  <a href="http://twitterclonesample-nodeangularapp.rhcloud.com/" target="_blank">here</a>
+
 How to use
 ----------
 
-### Typical configuration:
+### Minimal configuration with local authentication
+
+    var express = require('express');
+    var SCB = require('social-cms-backend');
+    var app = express();
+    app.use(SCB.middleware({
+      mongodb_url: 'mongodb://localhost:27017/socialcmsdb',
+      passport_strategy: 'local'
+    }));
+    app.listen(3000);
+
+### Typical configuration with Facebook authentication:
 
     var express = require('express');
     var SCB = require('social-cms-backend');
@@ -39,7 +77,7 @@ How to use
 
 Notice two environment variables which have to be obtrained from <https://developers.facebook.com/> and set properly. Refer [Facebook Doc](https://developers.facebook.com/docs/apps/register) for more information.
 
-### With socket.io v1.0:
+### Configuration with socket.io v1.0:
 
     var http = require('http');
     var express = require('express');
@@ -64,7 +102,7 @@ Notice two environment variables which have to be obtrained from <https://develo
     sio.use(SCB.socket_io(SCB_options));
     server.listen(3000);
 
-### With HTTP DIGEST strategy:
+### Configuration for HTTP DIGEST strategy:
 
     var SCB_options = {
       mongodb_url: 'mongodb://localhost:27017/socialcmsdb',
@@ -74,7 +112,7 @@ Notice two environment variables which have to be obtrained from <https://develo
       }
     };
 
-### With BreezeJS support:
+### Configuration with BreezeJS support:
 
     var SCB_options = {
       mongodb_url: 'mongodb://localhost:27017/socialcmsdb',
@@ -354,26 +392,6 @@ If you want to create a unique index, you can define it in an SCB option.
     }
 
 This will restrict one "like" at most for one article for each user.
-
-Screencast
-----------
-
-### How to create a Twitter clone in 15 minutes
-
-Screencast preview (quadruple speed):
-
-![Preview](http://dai-shi.github.io/social-cms-backend/ttyrecord.gif)
-
-<a href="http://dai-shi.github.io/social-cms-backend/ttyplay.html" target="_blank">Controllable screencast at normal speed</a>
-
-Notes:
-
-* There is a typo found after the recording.
-  `/javascript/main.js -> /javascripts/main.js`
-* The resulting code is available
-  [here](https://github.com/dai-shi/twitter-clone-sample/tree/20130804_recorded)
-* You can try the running web service of the code
-  <a href="http://twitterclonesample-nodeangularapp.rhcloud.com/" target="_blank">here</a>
 
 TODOs
 -----

@@ -1,8 +1,3 @@
-/*
-  Copyright (C) 2014, Daishi Kato <daishi@axlight.com>
-  All rights reserved.
-*/
-
 /* jshint undef: true, unused: true, latedef: true */
 /* jshint quotmark: single, eqeqeq: true, camelcase: true */
 /* jshint node: true */
