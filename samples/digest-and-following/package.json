@@ -1,19 +1,14 @@
 {
-  "name": "social-cms-backend-socketio-test-sample",
+  "name": "social-cms-backend-sample-of-digest-and-following",
   "version": "0.0.1",
   "private": true,
   "dependencies": {
-    "express": "~4.2.0",
-    "express-session": "~1.11.3",
-    "socket.io": "~1.3.7",
-    "social-cms-backend": "~0.7.0",
-    "static-favicon": "~1.0.0",
-    "morgan": "~1.0.0",
-    "cookie-parser": "~1.0.1",
     "body-parser": "~1.0.0",
-    "debug": "~0.7.4",
-    "jade": "~1.3.0",
-    "mongodb": "~2.6.4", 
-    "crypto-js": "*"
+    "cookie-parser": "~1.0.1",
+    "express": "^4.13.3",
+    "express-session": "~1.11.3",
+    "mongodb": "~2.0",
+    "social-cms-backend": "~0.7.0",
+    "socket.io": "~1.3.7"
   }
 }

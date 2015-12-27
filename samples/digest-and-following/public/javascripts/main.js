@@ -6,12 +6,13 @@
 
 'use strict';
 
-angular.module('mainModule', ['ngResource', 'ngSanitize', 'ngAnimate']);
+angular.module('mainModule', ['ngResource', 'ngSanitize']);
 
 
-angular.module('mainModule').controller('homeController', function($scope, $http, userResource, groupResource, postResource, getMyself) {
+angular.module('mainModule').controller('homeController', function($scope, $http, postResource, getMyself) {
   var socket = io();
   socket.on('new-post', function(data) {
+    console.log('Received:', data);
     getInbox();
   });
 
@@ -55,17 +56,13 @@ angular.module('mainModule').controller('homeController', function($scope, $http
       });
     };
   }, function() {
-    console.log('error');
+    console.log('login error');
   });
 });
 
 
 angular.module('mainModule').factory('userResource', function($resource) {
   return $resource('users/:id');
-});
-
-angular.module('mainModule').factory('groupResource', function($resource) {
-  return $resource('groups/:id');
 });
 
 angular.module('mainModule').factory('postResource', function($resource) {
