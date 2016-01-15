@@ -8,8 +8,10 @@
 ## [0.7.1] - 2015-12-16
 ### Added
 - Twitter auth support
+
 ### Changed
 - Improvements in local auth (initdata)
+
 ### Fixed
 - Some improvements in README
 
