@@ -27,6 +27,7 @@ Examples
 The followings are minimal example code that uses social-cms-backend.
 
 - [auth-local](examples/auth-local/) --- Simple BBS with local authentication
+- [digest-and-following](examples/digest-and-following/) --- An example app using digest auth and following feature (w/ socket.io)
 
 Screencast
 ----------
