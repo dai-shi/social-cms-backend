@@ -1,0 +1,14 @@
+{
+  "name": "social-cms-backend-sample-of-digest-and-following",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "body-parser": "~1.0.0",
+    "cookie-parser": "~1.0.1",
+    "express": "^4.13.3",
+    "express-session": "~1.11.3",
+    "mongodb": "~2.0",
+    "social-cms-backend": "~0.7.0",
+    "socket.io": "~1.3.7"
+  }
+}
