@@ -1,6 +1,8 @@
 social-cms-backend
 ==================
 
+[![npm version](https://badge.fury.io/js/social-cms-backend.svg)](https://badge.fury.io/js/social-cms-backend)
+
 Express middleware to provide schema-less REST APIs for creating a social networking website primarily using angular.js. It comes with built-in authentication, authorization and notification features.
 
 Motivation
