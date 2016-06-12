@@ -43,10 +43,7 @@
   ],
   "main": "./lib/index.js",
   "scripts": {
-    "test": "env NODE_ENV=test mocha -t 15000"
+    "test": "mocha -t 15000"
   },
-  "license": "BSD",
-  "engines": {
-    "node": "0.10.35"
-  }
+  "license": "BSD-2-Clause"
 }
