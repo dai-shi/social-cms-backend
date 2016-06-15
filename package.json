@@ -44,7 +44,9 @@
   ],
   "main": "./lib/index.js",
   "scripts": {
-    "test": "mocha -t 15000"
+    "test": "npm run eslint && npm run mocha",
+    "eslint": "eslint .",
+    "mocha": "mocha -t 15000"
   },
   "license": "BSD-2-Clause"
 }
