@@ -5,7 +5,8 @@
   "author": "Daishi Kato <daishi@axlight.com>",
   "contributors": [
     "Shunsuke Watanabe <craftgear@gmail.com>",
-    "Teruhisa Yamamoto"
+    "Teruhisa Yamamoto",
+    "Naoto Satoh"
   ],
   "dependencies": {
     "async": "0.2.10",
@@ -45,7 +46,7 @@
   "main": "./lib/index.js",
   "scripts": {
     "test": "npm run eslint && npm run mocha",
-    "eslint": "eslint .",
+    "eslint": "eslint lib",
     "mocha": "mocha -t 15000"
   },
   "license": "BSD-2-Clause"
