@@ -1,8 +1,4 @@
-/* jshint undef: true, unused: true, latedef: true */
-/* jshint quotmark: single, eqeqeq: true */
-/* jshint node: true */
-
-/* global describe, it */
+/* eslint-env mocha */
 
 var assert = require('assert');
 var async = require('async');
@@ -309,20 +305,20 @@ describe('check inbox', function() {
   // socket.io test
   //
 
-  /* this hack only works with node v0.10, should try with newer libs
   var socket_user002;
   var last_data_user002 = null;
   it('should connect socket.io for user002', function(done) {
     var cookie = request.get('http://localhost:' + port + '/').headers.cookie;
     var myAgent = new http.Agent();
+    // a hack to keep session cookie
     myAgent._addRequest = myAgent.addRequest;
-    myAgent.addRequest = function(req, host, portnum, localAddress) {
-      if (host === 'localhost' && portnum == port) { // jshint ignore: line
+    myAgent.addRequest = function(req, options) {
+      if (options.host === 'localhost' && options.port == port) { // eslint-disable-line eqeqeq
         var old = req._headers.cookie;
         req._headers.cookie = cookie + (old ? '; ' + old : '');
         req._headerNames.cookie = 'Cookie';
       }
-      return myAgent._addRequest(req, host, portnum, localAddress);
+      return myAgent._addRequest(req, options);
     };
     socket_user002 = socket_io_client('http://localhost:' + port + '/', {
       agent: myAgent
@@ -352,7 +348,6 @@ describe('check inbox', function() {
       }, 100);
     });
   });
-  */
 
 });
 
