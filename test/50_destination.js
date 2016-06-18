@@ -309,19 +309,10 @@ describe('check inbox', function() {
   var last_data_user002 = null;
   it('should connect socket.io for user002', function(done) {
     var cookie = request.get('http://localhost:' + port + '/').headers.cookie;
-    var myAgent = new http.Agent();
-    // a hack to keep session cookie
-    myAgent._addRequest = myAgent.addRequest;
-    myAgent.addRequest = function(req, options) {
-      if (options.host === 'localhost' && options.port == port) { // eslint-disable-line eqeqeq
-        var old = req._headers.cookie;
-        req._headers.cookie = cookie + (old ? '; ' + old : '');
-        req._headerNames.cookie = 'Cookie';
-      }
-      return myAgent._addRequest(req, options);
-    };
     socket_user002 = socket_io_client('http://localhost:' + port + '/', {
-      agent: myAgent
+      extraHeaders: {
+        'Cookie': cookie
+      }
     });
     socket_user002.on('connect', function() {
       socket_user002.on('new-post', function(data) {
