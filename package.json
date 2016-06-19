@@ -16,11 +16,11 @@
     "express-session": "1.0.4",
     "fb": "0.6.2",
     "mongodb": "1.4.35",
-    "passport": "0.1.18",
-    "passport-facebook": "0.1.6",
-    "passport-http": "0.2.2",
-    "passport-local": "0.1.6",
-    "passport-twitter": "1.0.3",
+    "passport": "^0.3.2",
+    "passport-facebook": "^2.1.1",
+    "passport-http": "^0.3.0",
+    "passport-local": "^1.0.0",
+    "passport-twitter": "^1.0.4",
     "underscore": "^1.8.3"
   },
   "devDependencies": {
