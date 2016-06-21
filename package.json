@@ -10,10 +10,10 @@
   ],
   "dependencies": {
     "async": "^1.5.2",
-    "body-parser": "1.0.2",
+    "body-parser": "^1.15.2",
     "breeze-mongodb": "0.0.6",
-    "cookie-parser": "1.0.1",
-    "express-session": "1.0.4",
+    "cookie-parser": "^1.4.3",
+    "express-session": "^1.13.0",
     "fb": "0.6.2",
     "mongodb": "1.4.35",
     "passport": "^0.3.2",
