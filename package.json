@@ -9,7 +9,7 @@
     "Naoto Satoh"
   ],
   "dependencies": {
-    "async": "0.2.10",
+    "async": "^1.5.2",
     "body-parser": "1.0.2",
     "breeze-mongodb": "0.0.6",
     "cookie-parser": "1.0.1",
