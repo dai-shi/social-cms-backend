@@ -15,7 +15,7 @@
     "cookie-parser": "^1.4.3",
     "express-session": "^1.13.0",
     "fb": "^1.1.1",
-    "mongodb": "1.4.35",
+    "mongodb": "^1.4.40",
     "passport": "^0.3.2",
     "passport-facebook": "^2.1.1",
     "passport-http": "^0.3.0",
