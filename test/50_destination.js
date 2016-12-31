@@ -32,7 +32,9 @@ describe('initialize server', function() {
     var options = {
       mongodb_url: mongodb_url,
       session_middleware: require('express-session')({
-        secret: 'dummy secret'
+        secret: 'dummy secret',
+        resave: false,
+        saveUninitialized: true
       })
     };
     app.use(SCB.middleware(options));
