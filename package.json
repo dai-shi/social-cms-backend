@@ -13,7 +13,7 @@
     "body-parser": "^1.15.2",
     "breeze-mongodb": "0.0.6",
     "cookie-parser": "^1.4.3",
-    "express-session": "^1.13.0",
+    "express-session": "^1.14.2",
     "fb": "^1.1.1",
     "mongodb": "^1.4.40",
     "passport": "^0.3.2",
