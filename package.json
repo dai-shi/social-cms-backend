@@ -36,6 +36,9 @@
     "type": "git",
     "url": "https://github.com/dai-shi/social-cms-backend.git"
   },
+  "engines": {
+    "node": ">=4.4.6"
+  },
   "keywords": [
     "express",
     "social",
